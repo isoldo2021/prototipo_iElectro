@@ -33,8 +33,11 @@ export function UserAuth() {
 
   if (!user) {
     return (
-      <Button asChild>
-        <Link href="/login">Ingresar</Link>
+      <Button asChild variant="ghost" className="flex-col items-center h-auto px-2 py-1">
+        <Link href="/login">
+            <UserIcon className="h-6 w-6"/>
+            <span className="text-xs">Mi cuenta</span>
+        </Link>
       </Button>
     );
   }
@@ -42,13 +45,14 @@ export function UserAuth() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-          <Avatar className="h-8 w-8">
-            <AvatarImage src={user.photoURL ?? ''} alt={user.displayName ?? 'Usuario'} />
-            <AvatarFallback>
-              {user.email ? user.email.charAt(0).toUpperCase() : <UserIcon />}
-            </AvatarFallback>
-          </Avatar>
+        <Button variant="ghost" className="flex-col items-center h-auto px-2 py-1">
+            <Avatar className="h-6 w-6">
+                <AvatarImage src={user.photoURL ?? ''} alt={user.displayName ?? 'Usuario'} />
+                <AvatarFallback>
+                {user.email ? user.email.charAt(0).toUpperCase() : <UserIcon />}
+                </AvatarFallback>
+            </Avatar>
+            <span className="text-xs">Mi cuenta</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="end" forceMount>

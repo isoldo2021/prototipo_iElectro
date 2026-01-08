@@ -4,6 +4,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { Truck, Store, Zap } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -19,6 +21,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useCart } from "@/context/cart-context";
 import { useToast } from "@/hooks/use-toast";
 import { Separator } from "./ui/separator";
+import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
+import type { ShippingOption } from "@/types";
+
+const shippingOptions: ShippingOption[] = [
+    { id: 'store', label: 'Recojo en Tienda', price: 0, description: 'Disponible en 24 horas' },
+    { id: 'home', label: 'Envío a Domicilio', price: 25, description: 'Entrega en 2-4 días hábiles' },
+    { id: 'immediate', label: 'Entrega Inmediata', price: 50, description: 'Recíbelo en menos de 2 horas' },
+];
 
 const formSchema = z.object({
   name: z.string().min(2, "El nombre debe tener al menos 2 caracteres."),
@@ -29,10 +39,11 @@ const formSchema = z.object({
   cardNumber: z.string().regex(/^\d{16}$/, "El número de tarjeta debe tener 16 dígitos."),
   expiryDate: z.string().regex(/^(0[1-9]|1[0-2])\/\d{2}$/, "El formato debe ser MM/AA."),
   cvc: z.string().regex(/^\d{3,4}$/, "El CVC debe tener 3 o 4 dígitos."),
+  shipping: z.enum(['store', 'home', 'immediate'], { required_error: 'Debes seleccionar un método de envío.' }),
 });
 
 export function CheckoutForm() {
-  const { total, clearCart, cartItems } = useCart();
+  const { total, clearCart, cartItems, setShippingOption, shippingTotal, subtotal } = useCart();
   const { toast } = useToast();
   const router = useRouter();
 
@@ -74,35 +85,61 @@ export function CheckoutForm() {
      )
   }
 
+  const handleShippingChange = (value: string) => {
+    const option = shippingOptions.find(o => o.id === value);
+    setShippingOption(option || null);
+    form.setValue('shipping', value as 'store' | 'home' | 'immediate');
+  }
+  
+  const getShippingIcon = (id: string) => {
+      switch(id) {
+          case 'store': return <Store className="h-6 w-6 text-primary" />;
+          case 'home': return <Truck className="h-6 w-6 text-primary" />;
+          case 'immediate': return <Zap className="h-6 w-6 text-primary" />;
+      }
+  }
+
   return (
-    <div className="grid md:grid-cols-2 gap-12">
-      <div>
-        <Card>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="grid md:grid-cols-2 gap-12 items-start">
+        <div className="space-y-8">
+           <Card>
             <CardHeader>
-                <CardTitle className="font-headline">Resumen del Pedido</CardTitle>
+              <CardTitle className="font-headline">Método de Entrega</CardTitle>
             </CardHeader>
             <CardContent>
-                <div className="space-y-4">
-                    {cartItems.map(item => (
-                        <div key={item.product.id} className="flex justify-between items-center text-sm">
-                            <div>
-                                <span className="font-semibold">{item.product.name}</span>
-                                <span className="text-muted-foreground"> x {item.quantity}</span>
-                            </div>
-                            <span>S/ {(item.product.price * item.quantity).toFixed(2)}</span>
-                        </div>
-                    ))}
-                    <Separator />
-                    <div className="flex justify-between font-bold text-lg">
-                        <span>Total</span>
-                        <span>S/ {total.toFixed(2)}</span>
-                    </div>
-                </div>
+                <FormField
+                  control={form.control}
+                  name="shipping"
+                  render={({ field }) => (
+                    <FormItem>
+                      <RadioGroup onValueChange={handleShippingChange} className="grid gap-4">
+                        {shippingOptions.map(option => (
+                           <FormItem key={option.id}>
+                             <FormControl>
+                               <RadioGroupItem value={option.id} className="sr-only" />
+                             </FormControl>
+                             <FormLabel
+                               className={`flex flex-col items-start p-4 rounded-lg border-2 cursor-pointer transition-colors ${field.value === option.id ? 'border-primary bg-primary/5' : 'border-border'}`}
+                              >
+                               <div className="flex items-center gap-4 w-full">
+                                {getShippingIcon(option.id)}
+                                <div className="flex-grow">
+                                    <span className="font-semibold">{option.label}</span>
+                                    <p className="text-sm text-muted-foreground">{option.description}</p>
+                                </div>
+                                <span className="font-semibold text-sm">S/ {option.price.toFixed(2)}</span>
+                               </div>
+                             </FormLabel>
+                           </FormItem>
+                        ))}
+                      </RadioGroup>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
             </CardContent>
-        </Card>
-      </div>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          </Card>
           <Card>
             <CardHeader>
               <CardTitle className="font-headline">Información de Envío</CardTitle>
@@ -177,6 +214,40 @@ export function CheckoutForm() {
               </div>
             </CardContent>
           </Card>
+        </div>
+        <div className="space-y-8">
+          <Card>
+              <CardHeader>
+                  <CardTitle className="font-headline">Resumen del Pedido</CardTitle>
+              </CardHeader>
+              <CardContent>
+                  <div className="space-y-4">
+                      {cartItems.map(item => (
+                          <div key={item.product.id} className="flex justify-between items-center text-sm">
+                              <div>
+                                  <span className="font-semibold">{item.product.name}</span>
+                                  <span className="text-muted-foreground"> x {item.quantity}</span>
+                              </div>
+                              <span>S/ {(item.product.price * item.quantity).toFixed(2)}</span>
+                          </div>
+                      ))}
+                      <Separator />
+                      <div className="flex justify-between text-sm">
+                          <span className="text-muted-foreground">Subtotal</span>
+                          <span>S/ {subtotal.toFixed(2)}</span>
+                      </div>
+                      <div className="flex justify-between text-sm">
+                          <span className="text-muted-foreground">Envío</span>
+                          <span>S/ {shippingTotal.toFixed(2)}</span>
+                      </div>
+                      <Separator />
+                      <div className="flex justify-between font-bold text-lg">
+                          <span>Total</span>
+                          <span>S/ {total.toFixed(2)}</span>
+                      </div>
+                  </div>
+              </CardContent>
+          </Card>
           <Card>
             <CardHeader>
               <CardTitle className="font-headline">Detalles de Pago</CardTitle>
@@ -229,8 +300,8 @@ export function CheckoutForm() {
           <Button type="submit" size="lg" className="w-full text-lg">
             Pagar S/ {total.toFixed(2)}
           </Button>
-        </form>
-      </Form>
-    </div>
+        </div>
+      </form>
+    </Form>
   );
 }

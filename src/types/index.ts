@@ -3,6 +3,13 @@ export type WarrantyOption = {
   price: number;
 };
 
+export type ShippingOption = {
+  id: 'immediate' | 'home' | 'store';
+  label: string;
+  price: number;
+  description: string;
+};
+
 export type Product = {
   id: string;
   name: string;

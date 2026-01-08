@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useState, ReactNode, useMemo, useEffect } from "react";
-import type { Product, WarrantyOption } from "@/types";
+import type { Product, WarrantyOption, ShippingOption } from "@/types";
 
 export interface CartItem {
   product: Product;
@@ -22,6 +22,9 @@ interface CartContextType {
   subtotal: number;
   warrantyTotal: number;
   installationTotal: number;
+  shippingOption: ShippingOption | null;
+  setShippingOption: (option: ShippingOption | null) => void;
+  shippingTotal: number;
   total: number;
 }
 
@@ -29,6 +32,8 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [shippingOption, setShippingOption] = useState<ShippingOption | null>(null);
+
 
   useEffect(() => {
     // In a real app, you might load the cart from localStorage
@@ -82,6 +87,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   const clearCart = () => {
     setCartItems([]);
+    setShippingOption(null);
   };
 
   const itemCount = useMemo(() => {
@@ -100,9 +106,13 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     return cartItems.reduce((sum, item) => sum + (item.installation && item.product.installationPrice ? item.product.installationPrice * item.quantity : 0), 0);
   }, [cartItems]);
 
+  const shippingTotal = useMemo(() => {
+    return shippingOption?.price ?? 0;
+  }, [shippingOption]);
+
   const total = useMemo(() => {
-    return subtotal + warrantyTotal + installationTotal;
-  }, [subtotal, warrantyTotal, installationTotal]);
+    return subtotal + warrantyTotal + installationTotal + shippingTotal;
+  }, [subtotal, warrantyTotal, installationTotal, shippingTotal]);
   
 
   const value = {
@@ -117,6 +127,9 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     subtotal,
     warrantyTotal,
     installationTotal,
+    shippingOption,
+    setShippingOption,
+    shippingTotal,
     total,
   };
 

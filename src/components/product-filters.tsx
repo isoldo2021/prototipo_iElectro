@@ -1,98 +1,91 @@
 "use client"
 
+import { useState } from "react"
 import {
     Accordion,
     AccordionContent,
     AccordionItem,
     AccordionTrigger,
 } from "@/components/ui/accordion"
-import Link from "next/link"
+import { Checkbox } from "@/components/ui/checkbox"
+import { Label } from "@/components/ui/label"
+import { Slider } from "@/components/ui/slider"
+import { Button } from "@/components/ui/button"
 
-const categories = [
-    {
-        name: "Audio",
-        subcategories: ["Parlantes portátiles", "Equipos de sonido", "Auriculares", "Audio para autos", "Radios"],
-    },
-    {
-        name: "Celulares",
-        subcategories: ["Celulares libres", "Smartwatches y Accesorios", "Accesorios de Celulares y Telefonía"],
-    },
-    {
-        name: "Climatización",
-        subcategories: ["Aires acondicionados", "Ventiladores y climatizadores", "Calefacción eléctrica", "Calefacción a gas", "Calefacción a leña"],
-    },
-    {
-        name: "Cocinas y hornos",
-        subcategories: ["Cocinas", "Anafes", "Hornos", "Microondas", "Campanas y purificadores"],
-    },
-    {
-        name: "Cuidado personal y salud",
-        subcategories: ["Planchitas de pelo", "Secadores de pelo", "Depiladoras", "Afeitadoras y cortapelos", "Salud y bienestar", "Balanzas Personales"],
-    },
-    {
-        name: "Heladeras y freezers",
-        subcategories: ["Heladeras", "Freezers", "Cavas"],
-    },
-    {
-        name: "Informática y gaming",
-        subcategories: ["Notebooks y PC", "Consolas y joysticks", "Impresoras y cartuchos", "Tablets", "Monitores y proyectores", "Teclados y mouse", "Cámaras de seguridad", "Fotografía", "Drones", "Accesorios y Componentes"],
-    },
-    {
-        name: "Instalaciones",
-        subcategories: [],
-    },
-    {
-        name: "Lavado",
-        subcategories: ["Lavarropas", "Secarropas", "Lavasecarropas", "Lavavajillas"],
-    },
-    {
-        name: "Pequeños electrodomésticos",
-        subcategories: ["Cafeteras", "Jarras eléctricas", "Jugueras y exprimidores", "Tostadoras y sandwicheras", "Licuadoras, procesadoras y gasificadoras", "Batidoras", "Cocción", "Planchas", "Máquinas de coser"],
-    },
-    {
-        name: "Termotanques y calefones",
-        subcategories: ["Calefones", "Termotanques a gas", "Termotanques eléctricos", "Termotanques Solares"],
-    },
-    {
-        name: "TV y soportes",
-        subcategories: ["Smart TV", "Soportes y accesorios"],
-    },
-]
+const subCategoryOptions = ["Heladeras", "Freezers", "Cavas"];
+const brandOptions = ["Samsung", "LG", "Whirlpool", "Gafa", "Patrick"];
+const colorOptions = ["Inox", "Blanco", "Negro", "Gris"];
+
 
 export function ProductFilters() {
+    const [priceRange, setPriceRange] = useState([1000, 12000000]);
+
     return (
-        <div className="p-4">
-             <Accordion type="single" collapsible defaultValue="electro-tecnologia" className="w-full">
-                <AccordionItem value="electro-tecnologia">
-                    <AccordionTrigger className="text-lg font-semibold hover:no-underline">
-                        Electro y tecnología
-                    </AccordionTrigger>
-                    <AccordionContent>
-                        <Accordion type="multiple" className="w-full space-y-2">
-                            {categories.map((category) => (
-                                <AccordionItem value={category.name} key={category.name} className="border-b-0">
-                                     <AccordionTrigger className="text-base font-semibold hover:no-underline border-b-0 p-1 rounded-md hover:bg-muted">
-                                        {category.name}
-                                    </AccordionTrigger>
-                                    {category.subcategories.length > 0 && (
-                                        <AccordionContent className="pb-0">
-                                            <ul className="flex flex-col gap-1 pl-4 pt-1">
-                                                {category.subcategories.map((subcategory) => (
-                                                    <li key={subcategory}>
-                                                        <Link href="#" className="text-muted-foreground hover:text-foreground hover:underline text-sm">
-                                                            {subcategory}
-                                                        </Link>
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        </AccordionContent>
-                                    )}
-                                </AccordionItem>
-                            ))}
-                        </Accordion>
-                    </AccordionContent>
-                </AccordionItem>
-             </Accordion>
+        <div className="p-4 flex flex-col h-full">
+            <h2 className="text-2xl font-bold font-headline mb-4">Filtros</h2>
+            
+            <div className="flex-grow space-y-4">
+                <Accordion type="multiple" defaultValue={["sub-categoria", "marca", "color"]}>
+                    <AccordionItem value="sub-categoria">
+                        <AccordionTrigger className="font-semibold">Sub-Categoría</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-2">
+                                {subCategoryOptions.map(option => (
+                                     <div key={option} className="flex items-center space-x-2">
+                                        <Checkbox id={`subcat-${option}`} />
+                                        <Label htmlFor={`subcat-${option}`} className="font-normal">{option}</Label>
+                                    </div>
+                                ))}
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
+                    <AccordionItem value="marca">
+                        <AccordionTrigger className="font-semibold">Marca</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-2">
+                                {brandOptions.map(option => (
+                                     <div key={option} className="flex items-center space-x-2">
+                                        <Checkbox id={`brand-${option}`} />
+                                        <Label htmlFor={`brand-${option}`} className="font-normal">{option}</Label>
+                                    </div>
+                                ))}
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
+                    <AccordionItem value="color">
+                        <AccordionTrigger className="font-semibold">Color</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-2">
+                                {colorOptions.map(option => (
+                                     <div key={option} className="flex items-center space-x-2">
+                                        <Checkbox id={`color-${option}`} />
+                                        <Label htmlFor={`color-${option}`} className="font-normal">{option}</Label>
+                                    </div>
+                                ))}
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
+                </Accordion>
+
+                <div>
+                    <h3 className="font-semibold mb-2 mt-4">Gama De Precios</h3>
+                    <Slider
+                        defaultValue={[priceRange[0], priceRange[1]]}
+                        max={12000000}
+                        min={1000}
+                        step={1000}
+                        onValueChange={(value) => setPriceRange(value)}
+                    />
+                    <div className="flex justify-between text-sm text-muted-foreground mt-2">
+                        <span>$ {priceRange[0].toLocaleString('es-AR')}</span>
+                        <span>$ {priceRange[1].toLocaleString('es-AR')}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div className="mt-6">
+                <Button className="w-full">APLICAR</Button>
+            </div>
         </div>
     )
 }

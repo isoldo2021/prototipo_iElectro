@@ -1,7 +1,7 @@
 
 "use client";
 
-import { ShoppingCart, Heart, User, Clock, Search, Menu, Mic } from 'lucide-react';
+import { ShoppingCart, Heart, User, Clock, Search, Menu, Mic, Tag } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/context/cart-context';
@@ -47,6 +47,12 @@ export function SiteHeader() {
             <Button variant="ghost" className="hidden md:flex flex-col items-center h-auto px-2 py-1">
                 <Clock className="h-6 w-6"/>
                 <span className="text-xs">Entrega inmediata</span>
+            </Button>
+            <Button variant="ghost" asChild className="hidden md:flex flex-col items-center h-auto px-2 py-1">
+                <Link href="/offers">
+                    <Tag className="h-6 w-6"/>
+                    <span className="text-xs">Ofertas</span>
+                </Link>
             </Button>
             <Button variant="ghost" className="hidden md:flex flex-col items-center h-auto px-2 py-1">
                 <Heart className="h-6 w-6"/>

@@ -1,0 +1,244 @@
+/**
+ * @fileoverview Firestore Security Rules for an E-commerce Appliance Store.
+ *
+ * @description
+ * This ruleset establishes a secure data access model for an e-commerce application.
+ * It strictly separates public catalog data from private user data, ensuring users
+ * can only access and manage their own information while browsing the full product
+ * catalog freely.
+ *
+ * @philosophy Core Philosophy
+ * The security model enforces a strict user-ownership paradigm. All sensitive or
+ * personal data, such as shopping carts and orders, is exclusively controlled by the
+ * user who created it. Publicly accessible data, like products and services, is
+ * read-only for all clients, implying that it is managed by administrators through a
+ * trusted backend environment.
+ *
+ * @structure Data Structure
+ * - `/products`, `/warranties`, `/installationServices`: Top-level collections for
+ *   publicly readable catalog data.
+ * - `/users/{userId}`: A top-level collection storing user profile documents. Access
+ *   is restricted to the document owner.
+ * - `/users/{userId}/shoppingCarts/{cartId}`: A subcollection for a user's private
+ *   shopping cart.
+ * - `/users/{userId}/orders/{orderId}`: A subcollection for a user's private
+ *   order history.
+ * This hierarchical structure for user data ensures that ownership can be determined
+ * directly from the document path, leading to simple and highly performant rules.
+ *
+ * @decisions Key Security Decisions
+ * - User Enumeration is explicitly blocked by disallowing `list` operations on the
+ *   top-level `/users` collection.
+ * - Public Catalog data is strictly read-only for clients. All write operations are
+ *   denied, as there is no client-side admin role defined.
+ * - User document deletion is disallowed to prevent orphaning related data (like
+ *   orders) and to preserve user history.
+ * - Relational Integrity is enforced on create and update. For example, a new Order
+ *   document created at `/users/USER_A/orders/ORDER_1` must contain a `userId` field
+ *   with the value `USER_A`. This field is immutable upon update.
+ *
+ * @denormalization Denormalization for Authorization
+ * To simplify authorization checks and avoid costly `get()` calls, user-specific
+ * documents like `ShoppingCart` and `Order` contain a denormalized `userId` field.
+ * This allows rules to validate ownership directly from the document's data without
+ * needing to reference other documents.
+ *
+ * @segregation Structural Segregation
+ * The ruleset leverages separate collections for public and private data. Public
+ * product information is in `/products`, while private user data is nested under
+ * `/users/{userId}`. This segregation provides a clear, secure boundary that
+ * prevents accidental data exposure and simplifies rules for list queries.
+ */
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ----------------------------------------------------------------------
+    // Helper Functions
+    // ----------------------------------------------------------------------
+
+    /**
+     * isSignedIn
+     * Checks if the user is authenticated.
+     */
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    /**
+     * isOwner
+     * Validates that the authenticated user's UID matches the provided userId.
+     */
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    /**
+     * isExistingDoc
+     * Checks if a document currently exists in Firestore.
+     * Crucial for update/delete operations to prevent acting on non-existent data.
+     */
+    function isExistingDoc() {
+      return resource != null;
+    }
+
+    /**
+     * isExistingOwner
+     * Combines owner and existence checks for secure update/delete operations.
+     */
+    function isExistingOwner(userId) {
+      return isOwner(userId) && isExistingDoc();
+    }
+
+    /**
+     * incomingData
+     * A shortcut to access the data of a document being written.
+     */
+    function incomingData() {
+      return request.resource.data;
+    }
+
+    /**
+     * existingData
+     * A shortcut to access the existing data of a document being updated/deleted.
+     */
+    function existingData() {
+      return resource.data;
+    }
+
+    /**
+     * isCreatingOwnUserDoc
+     * On create, ensures the user is creating their own document and that the
+     * document's internal `id` field correctly matches their UID.
+     */
+    function isCreatingOwnUserDoc(userId) {
+      return isOwner(userId) && incomingData().id == userId;
+    }
+
+    /**
+     * isUpdatingOwnUserDoc
+     * On update, ensures the document's internal `id` field cannot be changed.
+     */
+    function isUpdatingOwnUserDoc() {
+      return incomingData().id == existingData().id;
+    }
+
+    /**
+     * isCreatingOwnSubDoc
+     * For user subcollections, ensures the new document's internal `userId`
+     * field correctly matches the owner's UID from the path.
+     */
+    function isCreatingOwnSubDoc(userId) {
+      return isOwner(userId) && incomingData().userId == userId;
+    }
+
+    /**
+     * isUpdatingOwnSubDoc
+     * On update, ensures the subcollection document's `userId` field is immutable.
+     */
+    function isUpdatingOwnSubDoc() {
+      return incomingData().userId == existingData().userId;
+    }
+
+
+    // ----------------------------------------------------------------------
+    // Public Catalog Collections
+    // ----------------------------------------------------------------------
+
+    /**
+     * @description Anyone can view products, but only admins (via a trusted server) can manage them.
+     * @path /products/{productId}
+     * @allow (get) Any user, authenticated or not, can read a product's details.
+     * @deny (create) A client application cannot create a new product document.
+     * @principle Public read access for catalog data, with writes restricted to a secure backend.
+     */
+    match /products/{productId} {
+      allow get: if true;
+      allow list: if true;
+      allow create: if false;
+      allow update: if false;
+      allow delete: if false;
+    }
+
+    /**
+     * @description Anyone can view warranties, but only admins (via a trusted server) can manage them.
+     * @path /warranties/{warrantyId}
+     * @allow (get) Any user, authenticated or not, can read a warranty's details.
+     * @deny (create) A client application cannot create a new warranty document.
+     * @principle Public read access for catalog data, with writes restricted to a secure backend.
+     */
+    match /warranties/{warrantyId} {
+      allow get: if true;
+      allow list: if true;
+      allow create: if false;
+      allow update: if false;
+      allow delete: if false;
+    }
+
+    /**
+     * @description Anyone can view services, but only admins (via a trusted server) can manage them.
+     * @path /installationServices/{installationServiceId}
+     * @allow (get) Any user, authenticated or not, can read a service's details.
+     * @deny (create) A client application cannot create a new service document.
+     * @principle Public read access for catalog data, with writes restricted to a secure backend.
+     */
+    match /installationServices/{installationServiceId} {
+      allow get: if true;
+      allow list: if true;
+      allow create: if false;
+      allow update: if false;
+      allow delete: if false;
+    }
+
+
+    // ----------------------------------------------------------------------
+    // User Data Collections
+    // ----------------------------------------------------------------------
+
+    /**
+     * @description Users can create and manage their own profile document, but cannot see other users' profiles.
+     * @path /users/{userId}
+     * @allow (create) auth.uid 'user_123' can create `/users/user_123` if the doc includes `id: 'user_123'`.
+     * @deny (get) auth.uid 'user_456' cannot read `/users/user_123`.
+     * @deny (list) No user can list all documents in the `/users` collection.
+     * @principle Enforces self-creation and ownership, and prevents user enumeration attacks.
+     */
+    match /users/{userId} {
+      allow get: if isOwner(userId);
+      allow list: if false;
+      allow create: if isCreatingOwnUserDoc(userId);
+      allow update: if isExistingOwner(userId) && isUpdatingOwnUserDoc();
+      allow delete: if false; // Deleting user doc could orphan other data; safer to disallow.
+    }
+
+    /**
+     * @description Users can manage their own shopping carts.
+     * @path /users/{userId}/shoppingCarts/{cartId}
+     * @allow (create) auth.uid 'user_123' can create a document in `/users/user_123/shoppingCarts`.
+     * @deny (get) auth.uid 'user_456' cannot read a document in `/users/user_123/shoppingCarts`.
+     * @principle Restricts access to a user's own data tree using path-based ownership.
+     */
+    match /users/{userId}/shoppingCarts/{cartId} {
+      allow get: if isOwner(userId);
+      allow list: if isOwner(userId);
+      allow create: if isCreatingOwnSubDoc(userId);
+      allow update: if isExistingOwner(userId) && isUpdatingOwnSubDoc();
+      allow delete: if isExistingOwner(userId);
+    }
+
+    /**
+     * @description Users can manage their own orders.
+     * @path /users/{userId}/orders/{orderId}
+     * @allow (create) auth.uid 'user_123' can create a document in `/users/user_123/orders`.
+     * @deny (get) auth.uid 'user_456' cannot read a document in `/users/user_123/orders`.
+     * @principle Restricts access to a user's own data tree using path-based ownership.
+     */
+    match /users/{userId}/orders/{orderId} {
+      allow get: if isOwner(userId);
+      allow list: if isOwner(userId);
+      allow create: if isCreatingOwnSubDoc(userId);
+      allow update: if isExistingOwner(userId) && isUpdatingOwnSubDoc();
+      allow delete: if isExistingOwner(userId);
+    }
+  }
+}

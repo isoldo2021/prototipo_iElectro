@@ -1,0 +1,329 @@
+{
+  "entities": {
+    "Product": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Product",
+      "type": "object",
+      "description": "Represents an appliance available for sale.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Product entity."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the product."
+        },
+        "description": {
+          "type": "string",
+          "description": "Detailed description of the product."
+        },
+        "imageUrl": {
+          "type": "string",
+          "description": "URL of the product image.",
+          "format": "uri"
+        },
+        "price": {
+          "type": "number",
+          "description": "Price of the product."
+        },
+        "technicalSpecifications": {
+          "type": "string",
+          "description": "Technical specifications of the product, stored as a JSON string."
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "description",
+        "imageUrl",
+        "price",
+        "technicalSpecifications"
+      ]
+    },
+    "ShoppingCart": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "ShoppingCart",
+      "type": "object",
+      "description": "Represents the user's shopping cart.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the ShoppingCart entity."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to User. (Relationship: User 1:1 ShoppingCart)"
+        },
+        "productIds": {
+          "type": "array",
+          "description": "References to Products. (Relationship: ShoppingCart 1:N Product)",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "productIds"
+      ]
+    },
+    "Order": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Order",
+      "type": "object",
+      "description": "Represents a completed order.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Order entity."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to User. (Relationship: User 1:N Order)"
+        },
+        "productIds": {
+          "type": "array",
+          "description": "References to Products. (Relationship: Order 1:N Product)",
+          "items": {
+            "type": "string"
+          }
+        },
+        "orderDate": {
+          "type": "string",
+          "description": "Date and time the order was placed.",
+          "format": "date-time"
+        },
+        "paymentMethod": {
+          "type": "string",
+          "description": "The payment method used for the order."
+        },
+        "warrantyIds": {
+          "type": "array",
+          "description": "References to Warranties added to the order. (Relationship: Order 1:N Warranty)",
+          "items": {
+            "type": "string"
+          }
+        },
+        "installationServiceId": {
+          "type": "string",
+          "description": "Reference to InstallationService. (Relationship: Order 1:1 InstallationService)"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "productIds",
+        "orderDate",
+        "paymentMethod"
+      ]
+    },
+    "Warranty": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Warranty",
+      "type": "object",
+      "description": "Represents a warranty for a product.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Warranty entity."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the warranty."
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the warranty coverage."
+        },
+        "price": {
+          "type": "number",
+          "description": "Price of the warranty."
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "description",
+        "price"
+      ]
+    },
+    "InstallationService": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "InstallationService",
+      "type": "object",
+      "description": "Represents an installation service for a product.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the InstallationService entity."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the installation service."
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the installation service."
+        },
+        "price": {
+          "type": "number",
+          "description": "Price of the installation service."
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "description",
+        "price"
+      ]
+    },
+    "User": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "User",
+      "type": "object",
+      "description": "Represents a user of the application.  Authentication data such as passwords should be handled by an external authentication service.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the User entity."
+        },
+        "firstName": {
+          "type": "string",
+          "description": "First name of the user."
+        },
+        "lastName": {
+          "type": "string",
+          "description": "Last name of the user."
+        },
+        "email": {
+          "type": "string",
+          "description": "Email address of the user.",
+          "format": "email"
+        }
+      },
+      "required": [
+        "id",
+        "firstName",
+        "lastName",
+        "email"
+      ]
+    }
+  },
+  "auth": {
+    "providers": [
+      "password",
+      "anonymous"
+    ]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/products/{productId}",
+        "definition": {
+          "entityName": "Product",
+          "schema": {
+            "$ref": "#/backend/entities/Product"
+          },
+          "description": "Stores appliance product information.",
+          "params": [
+            {
+              "name": "productId",
+              "description": "Unique identifier for the product."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}",
+        "definition": {
+          "entityName": "User",
+          "schema": {
+            "$ref": "#/backend/entities/User"
+          },
+          "description": "Stores user profile information.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "Unique identifier for the user."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/shoppingCarts/{cartId}",
+        "definition": {
+          "entityName": "ShoppingCart",
+          "schema": {
+            "$ref": "#/backend/entities/ShoppingCart"
+          },
+          "description": "Stores shopping cart information for a specific user. Includes denormalized 'userId' for authorization independence.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "Unique identifier for the user."
+            },
+            {
+              "name": "cartId",
+              "description": "Unique identifier for the shopping cart."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/orders/{orderId}",
+        "definition": {
+          "entityName": "Order",
+          "schema": {
+            "$ref": "#/backend/entities/Order"
+          },
+          "description": "Stores order information for a specific user. Includes denormalized 'userId' for authorization independence.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "Unique identifier for the user."
+            },
+            {
+              "name": "orderId",
+              "description": "Unique identifier for the order."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/warranties/{warrantyId}",
+        "definition": {
+          "entityName": "Warranty",
+          "schema": {
+            "$ref": "#/backend/entities/Warranty"
+          },
+          "description": "Stores warranty information.",
+          "params": [
+            {
+              "name": "warrantyId",
+              "description": "Unique identifier for the warranty."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/installationServices/{installationServiceId}",
+        "definition": {
+          "entityName": "InstallationService",
+          "schema": {
+            "$ref": "#/backend/entities/InstallationService"
+          },
+          "description": "Stores installation service information.",
+          "params": [
+            {
+              "name": "installationServiceId",
+              "description": "Unique identifier for the installation service."
+            }
+          ]
+        }
+      }
+    ],
+    "reasoning": "The Firestore structure is designed to support an e-commerce application for selling appliances, focusing on products, shopping carts, orders, warranties, and installation services. The structure prioritizes authorization independence and simplifies security rules.\n\n**Authorization Independence:**\n*   User-specific data (shopping carts and orders) is stored under the `/users/{userId}` path, ensuring that access control can be based solely on the authenticated user ID without requiring complex `get()` calls to parent documents. This eliminates hierarchical authorization dependencies and enables atomic operations.\n\n**Structural Segregation:**\n*   Products, warranties, and installation services are stored in separate top-level collections. This ensures that all documents within each collection share the same security requirements, simplifying rules.\n\n**Access Modeling:**\n*   Private data (shopping carts, orders) are structured using Path-Based ownership (`/users/{userId}/shoppingCarts/{cartId}`, `/users/{userId}/orders/{orderId}`). This provides a clear and secure ownership model.\n\n**QAPs (Rules are not Filters):**\n*   The path-based ownership model for shopping carts and orders ensures secure list operations. A user can only list their own shopping carts and orders, not those of other users.\n\n**Invariants:**\n*   Timestamps can be easily added to the Order documents for tracking order dates.\n*   Denormalization is used for Authorization Independence and to ensure the integrity of ownership. For example, the `userId` field in the `ShoppingCart` and `Order` documents is a form of denormalization, allowing for direct access control based on the user ID.\n"
+  }
+}

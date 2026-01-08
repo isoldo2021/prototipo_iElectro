@@ -1,11 +1,12 @@
 "use client";
 
-import { ShoppingCart, User } from 'lucide-react';
+import { ShoppingCart } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/context/cart-context';
 import { Logo } from '@/components/logo';
 import { SidebarTrigger } from './ui/sidebar';
+import { UserAuth } from './user-auth';
 
 export function SiteHeader() {
   const { itemCount } = useCart();
@@ -32,10 +33,7 @@ export function SiteHeader() {
                 <span className="sr-only">Shopping Cart</span>
               </Link>
             </Button>
-            <Button variant="ghost" size="icon">
-                <User className="h-5 w-5" />
-                <span className="sr-only">User Account</span>
-            </Button>
+            <UserAuth />
           </nav>
         </div>
       </div>

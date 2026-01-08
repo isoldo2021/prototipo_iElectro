@@ -58,9 +58,14 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
           />
         </div>
         <div>
-          <h1 className="text-3xl md:text-4xl font-bold font-headline mb-4">
+          <h1 className="text-3xl md:text-4xl font-bold font-headline mb-2">
             {product.name}
           </h1>
+          {product.seller && (
+            <p className="text-sm text-muted-foreground mb-4">
+                Vendido y enviado por <span className="font-semibold text-foreground">{product.seller}</span>
+            </p>
+          )}
           <p className="text-muted-foreground text-lg mb-6">
             {product.description}
           </p>

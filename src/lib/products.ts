@@ -126,6 +126,7 @@ export const products: Product[] = [
     warrantyOptions: [
         { months: 12, price: 45 },
     ],
+    seller: 'ElectroHogar'
   },
 ];
 

@@ -25,6 +25,7 @@ export type Product = {
   };
   warrantyOptions: WarrantyOption[];
   installationPrice?: number;
+  seller?: string;
 };
 
 export type Order = {

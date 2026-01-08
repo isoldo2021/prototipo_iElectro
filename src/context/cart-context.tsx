@@ -1,0 +1,132 @@
+"use client";
+
+import { createContext, useContext, useState, ReactNode, useMemo, useEffect } from "react";
+import type { Product } from "@/types";
+
+export interface CartItem {
+  product: Product;
+  quantity: number;
+  warranty: boolean;
+  installation: boolean;
+}
+
+interface CartContextType {
+  cartItems: CartItem[];
+  addToCart: (product: Product, quantity?: number) => void;
+  removeFromCart: (productId: string) => void;
+  updateQuantity: (productId: string, quantity: number) => void;
+  toggleWarranty: (productId: string) => void;
+  toggleInstallation: (productId: string) => void;
+  clearCart: () => void;
+  itemCount: number;
+  subtotal: number;
+  warrantyTotal: number;
+  installationTotal: number;
+  total: number;
+}
+
+const CartContext = createContext<CartContextType | undefined>(undefined);
+
+export const CartProvider = ({ children }: { children: ReactNode }) => {
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+
+  useEffect(() => {
+    // In a real app, you might load the cart from localStorage
+  }, []);
+
+  const addToCart = (product: Product, quantity = 1) => {
+    setCartItems((prevItems) => {
+      const existingItem = prevItems.find((item) => item.product.id === product.id);
+      if (existingItem) {
+        return prevItems.map((item) =>
+          item.product.id === product.id
+            ? { ...item, quantity: item.quantity + quantity }
+            : item
+        );
+      }
+      return [...prevItems, { product, quantity, warranty: false, installation: false }];
+    });
+  };
+
+  const removeFromCart = (productId: string) => {
+    setCartItems((prevItems) => prevItems.filter((item) => item.product.id !== productId));
+  };
+
+  const updateQuantity = (productId: string, quantity: number) => {
+    if (quantity <= 0) {
+      removeFromCart(productId);
+      return;
+    }
+    setCartItems((prevItems) =>
+      prevItems.map((item) =>
+        item.product.id === productId ? { ...item, quantity } : item
+      )
+    );
+  };
+
+  const toggleWarranty = (productId: string) => {
+    setCartItems((prevItems) =>
+      prevItems.map((item) =>
+        item.product.id === productId ? { ...item, warranty: !item.warranty } : item
+      )
+    );
+  };
+  
+  const toggleInstallation = (productId: string) => {
+    setCartItems((prevItems) =>
+      prevItems.map((item) =>
+        item.product.id === productId && item.product.installationPrice ? { ...item, installation: !item.installation } : item
+      )
+    );
+  };
+
+  const clearCart = () => {
+    setCartItems([]);
+  };
+
+  const itemCount = useMemo(() => {
+    return cartItems.reduce((sum, item) => sum + item.quantity, 0);
+  }, [cartItems]);
+
+  const subtotal = useMemo(() => {
+    return cartItems.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
+  }, [cartItems]);
+
+  const warrantyTotal = useMemo(() => {
+    return cartItems.reduce((sum, item) => sum + (item.warranty ? item.product.warrantyPrice * item.quantity : 0), 0);
+  }, [cartItems]);
+
+  const installationTotal = useMemo(() => {
+    return cartItems.reduce((sum, item) => sum + (item.installation && item.product.installationPrice ? item.product.installationPrice * item.quantity : 0), 0);
+  }, [cartItems]);
+
+  const total = useMemo(() => {
+    return subtotal + warrantyTotal + installationTotal;
+  }, [subtotal, warrantyTotal, installationTotal]);
+  
+
+  const value = {
+    cartItems,
+    addToCart,
+    removeFromCart,
+    updateQuantity,
+    toggleWarranty,
+    toggleInstallation,
+    clearCart,
+    itemCount,
+    subtotal,
+    warrantyTotal,
+    installationTotal,
+    total,
+  };
+
+  return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
+};
+
+export const useCart = () => {
+  const context = useContext(CartContext);
+  if (context === undefined) {
+    throw new Error("useCart must be used within a CartProvider");
+  }
+  return context;
+};

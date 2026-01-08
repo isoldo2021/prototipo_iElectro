@@ -1,3 +1,40 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "refrigerator-1",
+      "description": "Modern stainless steel refrigerator with a water dispenser.",
+      "imageUrl": "https://images.unsplash.com/photo-1643356472833-5b1f2cd4ca3c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxyZWZyaWdlcmF0b3IlMjBraXRjaGVufGVufDB8fHx8MTc2NzgxMDU4MHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "refrigerator kitchen"
+    },
+    {
+      "id": "washing-machine-1",
+      "description": "Front-loading white washing machine.",
+      "imageUrl": "https://images.unsplash.com/photo-1668417863230-64f268d1d252?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8d2FzaGluZyUyMG1hY2hpbmV8ZW58MHx8fHwxNzY3ODk4Njc3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "washing machine"
+    },
+    {
+      "id": "microwave-1",
+      "description": "Sleek black microwave oven.",
+      "imageUrl": "https://images.unsplash.com/photo-1626143508000-4b5904e5e84a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxtaWNyb3dhdmUlMjBvdmVufGVufDB8fHx8MTc2Nzg1NDE3NXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "microwave oven"
+    },
+    {
+      "id": "tv-1",
+      "description": "A 65-inch 4K Smart TV with a thin bezel.",
+      "imageUrl": "https://images.unsplash.com/flagged/photo-1572609239482-d3a83f976aa0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxzbWFydCUyMHR2fGVufDB8fHx8MTc2Nzg5ODY3N3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "smart tv"
+    },
+    {
+      "id": "coffee-maker-1",
+      "description": "Drip coffee maker with a glass carafe.",
+      "imageUrl": "https://images.unsplash.com/photo-1515442261605-65987783cb6a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Y29mZmVlJTIwbWFrZXJ8ZW58MHx8fHwxNzY3ODcxNzIxfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "coffee maker"
+    },
+    {
+      "id": "blender-1",
+      "description": "High-speed blender for smoothies and more.",
+      "imageUrl": "https://images.unsplash.com/photo-1564940735784-b15466e8dc09?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxraXRjaGVuJTIwYmxlbmRlcnxlbnwwfHx8fDE3Njc3OTUyMjB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "kitchen blender"
+    }
+  ]
 }

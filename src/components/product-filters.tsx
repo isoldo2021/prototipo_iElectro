@@ -12,6 +12,21 @@ import { Label } from "@/components/ui/label"
 import { Slider } from "@/components/ui/slider"
 import { Button } from "@/components/ui/button"
 
+const categories = [
+    "Audio",
+    "Celulares",
+    "Climatización",
+    "Cocinas y hornos",
+    "Cuidado personal y salud",
+    "Heladeras y freezers",
+    "Informática y gaming",
+    "Instalaciones",
+    "Lavado",
+    "Pequeños electrodomésticos",
+    "Termotanques y calefones",
+    "TV y soportes"
+];
+
 const subCategoryOptions = ["Heladeras", "Freezers", "Cavas"];
 const brandOptions = ["Samsung", "LG", "Whirlpool", "Gafa", "Patrick"];
 const colorOptions = ["Inox", "Blanco", "Negro", "Gris"];
@@ -22,9 +37,26 @@ export function ProductFilters() {
 
     return (
         <div className="p-4 flex flex-col h-full">
-            <h2 className="text-2xl font-bold font-headline mb-4">Filtros</h2>
-            
+            <h2 className="text-2xl font-bold font-headline mb-4">Categorías</h2>
+
             <div className="flex-grow space-y-4">
+                <Accordion type="single" collapsible defaultValue="electro">
+                     <AccordionItem value="electro">
+                        <AccordionTrigger className="font-semibold">Electro y tecnología</AccordionTrigger>
+                        <AccordionContent>
+                           <div className="space-y-2">
+                                {categories.map(category => (
+                                     <div key={category} className="flex items-center space-x-2">
+                                        <a href="#" className="text-sm hover:underline">{category}</a>
+                                    </div>
+                                ))}
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
+                </Accordion>
+
+                <h2 className="text-2xl font-bold font-headline mb-4 pt-4 border-t">Filtros</h2>
+                
                 <Accordion type="multiple" defaultValue={["sub-categoria", "marca", "color"]}>
                     <AccordionItem value="sub-categoria">
                         <AccordionTrigger className="font-semibold">Sub-Categoría</AccordionTrigger>

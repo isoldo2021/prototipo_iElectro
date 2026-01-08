@@ -1,11 +1,5 @@
 "use client"
 
-import {
-    Accordion,
-    AccordionContent,
-    AccordionItem,
-    AccordionTrigger,
-} from "@/components/ui/accordion"
 import { ScrollArea } from "./ui/scroll-area"
 import Link from "next/link"
 import { Package, Truck, ScanSearch, PackageSearch } from "lucide-react"
@@ -15,9 +9,6 @@ import { ProductFilters } from "./product-filters"
 export function CategoryMenu() {
     return (
         <div className="flex flex-col h-full">
-            <div className="p-4 border-b space-y-2">
-                <h2 className="text-2xl font-headline font-bold">Categorías</h2>
-            </div>
             <ScrollArea className="flex-1">
                 <ProductFilters />
             </ScrollArea>

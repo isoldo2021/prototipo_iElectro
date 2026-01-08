@@ -7,16 +7,18 @@ import { Trash2, ShieldCheck, Wrench } from "lucide-react";
 import { useCart } from "@/context/cart-context";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, TableFooter } from "@/components/ui/table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
+import type { WarrantyOption } from "@/types";
 
 export function CartView() {
   const { 
     cartItems, 
     removeFromCart, 
     updateQuantity, 
-    toggleWarranty, 
+    updateWarranty,
     toggleInstallation, 
     itemCount, 
     subtotal, 
@@ -72,10 +74,31 @@ export function CartView() {
                       <p className="text-sm text-muted-foreground">S/ {product.price.toFixed(2)}</p>
                       <div className="mt-2 flex flex-col gap-2">
                           <div className="flex items-center space-x-2">
-                            <Checkbox id={`warranty-${product.id}`} checked={warranty} onCheckedChange={() => toggleWarranty(product.id)} />
-                            <label htmlFor={`warranty-${product.id}`} className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 flex items-center gap-1">
-                                <ShieldCheck className="h-4 w-4 text-green-600"/> Garantía (+S/ {product.warrantyPrice.toFixed(2)})
-                            </label>
+                            <ShieldCheck className="h-4 w-4 text-green-600"/>
+                             <Select
+                                value={warranty ? String(warranty.months) : "0"}
+                                onValueChange={(value) => {
+                                    const selectedMonths = parseInt(value, 10);
+                                    if (selectedMonths === 0) {
+                                        updateWarranty(product.id, null);
+                                    } else {
+                                        const newWarranty = product.warrantyOptions.find(w => w.months === selectedMonths);
+                                        updateWarranty(product.id, newWarranty || null);
+                                    }
+                                }}
+                             >
+                                <SelectTrigger className="w-[220px] h-8 text-sm">
+                                    <SelectValue placeholder="Garantía Extendida" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="0">Sin garantía</SelectItem>
+                                    {product.warrantyOptions.map(option => (
+                                        <SelectItem key={option.months} value={String(option.months)}>
+                                            {option.months} meses (+S/ {option.price.toFixed(2)})
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                             </Select>
                           </div>
                           {product.installationPrice && (
                             <div className="flex items-center space-x-2">

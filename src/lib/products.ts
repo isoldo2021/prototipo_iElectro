@@ -17,7 +17,10 @@ export const products: Product[] = [
       'Tipo': 'Dos puertas',
       'Color': 'Acero Inoxidable',
     },
-    warrantyPrice: 250,
+    warrantyOptions: [
+        { months: 12, price: 250 },
+        { months: 24, price: 450 },
+    ],
     installationPrice: 150,
   },
   {
@@ -36,7 +39,10 @@ export const products: Product[] = [
       'Programas': '15',
       'Color': 'Blanco',
     },
-    warrantyPrice: 190,
+    warrantyOptions: [
+        { months: 12, price: 190 },
+        { months: 24, price: 340 },
+    ],
     installationPrice: 100,
   },
   {
@@ -55,7 +61,9 @@ export const products: Product[] = [
       'Niveles de Potencia': '5',
       'Color': 'Negro',
     },
-    warrantyPrice: 60,
+    warrantyOptions: [
+        { months: 12, price: 60 },
+    ],
   },
   {
     id: 'prod_004',
@@ -73,7 +81,10 @@ export const products: Product[] = [
       'Puertos HDMI': '3',
       'Smart OS': 'Sí',
     },
-    warrantyPrice: 320,
+    warrantyOptions: [
+        { months: 12, price: 320 },
+        { months: 24, price: 580 },
+    ],
     installationPrice: 200,
   },
   {
@@ -92,7 +103,9 @@ export const products: Product[] = [
       'Función Mantener Caliente': 'Sí',
       'Color': 'Negro y Acero',
     },
-    warrantyPrice: 25,
+    warrantyOptions: [
+        { months: 12, price: 25 },
+    ],
   },
   {
     id: 'prod_006',
@@ -110,7 +123,9 @@ export const products: Product[] = [
       'Velocidades': 'Variable + Pulso',
       'Color': 'Gris',
     },
-    warrantyPrice: 45,
+    warrantyOptions: [
+        { months: 12, price: 45 },
+    ],
   },
 ];
 

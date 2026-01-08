@@ -9,6 +9,7 @@ import Image from "next/image";
 import { useCart } from "@/context/cart-context";
 import { useToast } from "@/hooks/use-toast";
 import { ShoppingCart } from "lucide-react";
+import type { Product } from "@/types";
 
 export function CompareView() {
     const { comparisonItems } = useComparison();
@@ -31,7 +32,7 @@ export function CompareView() {
 
     const allSpecKeys = Array.from(new Set(comparisonItems.flatMap(item => Object.keys(item.specifications))));
     
-    const handleAddToCart = (product: typeof comparisonItems[0]) => {
+    const handleAddToCart = (product: Product) => {
         addToCart(product);
         toast({
             title: "Agregado al carrito",
@@ -63,6 +64,14 @@ export function CompareView() {
                                 {comparisonItems.map(item => (
                                     <TableCell key={item.id} className="text-center font-bold text-primary text-lg">
                                         S/ {item.price.toFixed(2)}
+                                    </TableCell>
+                                ))}
+                            </TableRow>
+                             <TableRow>
+                                <TableCell className="font-semibold">Garantía</TableCell>
+                                {comparisonItems.map(item => (
+                                    <TableCell key={item.id} className="text-center">
+                                        {item.warrantyOptions.map(w => `${w.months}m (S/${w.price})`).join(', ') || 'N/A'}
                                     </TableCell>
                                 ))}
                             </TableRow>

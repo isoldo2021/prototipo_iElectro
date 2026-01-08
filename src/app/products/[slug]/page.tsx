@@ -11,16 +11,20 @@ import {
   TableBody,
   TableCell,
   TableRow,
-  TableHead,
-  TableHeader,
 } from "@/components/ui/table";
 import { useCart } from "@/context/cart-context";
 import { useToast } from "@/hooks/use-toast";
 import { ProductGrid } from "@/components/product-grid";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Label } from "@/components/ui/label";
+import { useState } from "react";
+import type { WarrantyOption } from "@/types";
 
 export default function ProductPage({ params }: { params: { slug: string } }) {
   const { addToCart } = useCart();
   const { toast } = useToast();
+  const [selectedWarranty, setSelectedWarranty] = useState<WarrantyOption | null>(null);
+
 
   const product = getProductBySlug(params.slug);
 
@@ -29,7 +33,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
   }
 
   const handleAddToCart = () => {
-    addToCart(product);
+    addToCart(product, 1, selectedWarranty);
     toast({
       title: "Agregado al carrito",
       description: `${product.name} ha sido agregado a tu carrito.`,
@@ -65,11 +69,23 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
           </div>
 
           <div className="flex flex-col gap-4 mb-8">
-            <div className="flex items-center gap-3 rounded-lg border p-4">
-                <ShieldCheck className="h-8 w-8 text-primary" />
+            <div className="flex items-start gap-3 rounded-lg border p-4">
+                <ShieldCheck className="h-8 w-8 text-primary mt-1 flex-shrink-0" />
                 <div>
                     <h3 className="font-semibold">Garantía Extendida</h3>
-                    <p className="text-sm text-muted-foreground">Protege tu compra por un año más por solo S/ {product.warrantyPrice.toFixed(2)}.</p>
+                    <p className="text-sm text-muted-foreground mb-3">Protege tu compra por más tiempo.</p>
+                     <RadioGroup onValueChange={(value) => setSelectedWarranty(product.warrantyOptions.find(w => w.months === parseInt(value)) || null)}>
+                        <div className="flex items-center space-x-2">
+                           <RadioGroupItem value="0" id="warranty-none" defaultChecked/>
+                           <Label htmlFor="warranty-none">Sin garantía extendida</Label>
+                        </div>
+                        {product.warrantyOptions.map(option => (
+                           <div key={option.months} className="flex items-center space-x-2">
+                              <RadioGroupItem value={String(option.months)} id={`warranty-${option.months}`} />
+                              <Label htmlFor={`warranty-${option.months}`}>{option.months} meses (+S/ {option.price.toFixed(2)})</Label>
+                           </div>
+                        ))}
+                     </RadioGroup>
                 </div>
             </div>
             {product.installationPrice && (

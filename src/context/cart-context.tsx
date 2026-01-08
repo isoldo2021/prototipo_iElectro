@@ -1,21 +1,21 @@
 "use client";
 
 import { createContext, useContext, useState, ReactNode, useMemo, useEffect } from "react";
-import type { Product } from "@/types";
+import type { Product, WarrantyOption } from "@/types";
 
 export interface CartItem {
   product: Product;
   quantity: number;
-  warranty: boolean;
+  warranty: WarrantyOption | null;
   installation: boolean;
 }
 
 interface CartContextType {
   cartItems: CartItem[];
-  addToCart: (product: Product, quantity?: number) => void;
+  addToCart: (product: Product, quantity?: number, warranty?: WarrantyOption | null) => void;
   removeFromCart: (productId: string) => void;
   updateQuantity: (productId: string, quantity: number) => void;
-  toggleWarranty: (productId: string) => void;
+  updateWarranty: (productId: string, warranty: WarrantyOption | null) => void;
   toggleInstallation: (productId: string) => void;
   clearCart: () => void;
   itemCount: number;
@@ -34,7 +34,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     // In a real app, you might load the cart from localStorage
   }, []);
 
-  const addToCart = (product: Product, quantity = 1) => {
+  const addToCart = (product: Product, quantity = 1, warranty: WarrantyOption | null = null) => {
     setCartItems((prevItems) => {
       const existingItem = prevItems.find((item) => item.product.id === product.id);
       if (existingItem) {
@@ -44,7 +44,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
             : item
         );
       }
-      return [...prevItems, { product, quantity, warranty: false, installation: false }];
+      return [...prevItems, { product, quantity, warranty, installation: false }];
     });
   };
 
@@ -63,15 +63,15 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       )
     );
   };
-
-  const toggleWarranty = (productId: string) => {
-    setCartItems((prevItems) =>
-      prevItems.map((item) =>
-        item.product.id === productId ? { ...item, warranty: !item.warranty } : item
-      )
+  
+  const updateWarranty = (productId: string, warranty: WarrantyOption | null) => {
+    setCartItems(prevItems => 
+        prevItems.map(item => 
+            item.product.id === productId ? { ...item, warranty } : item
+        )
     );
   };
-  
+
   const toggleInstallation = (productId: string) => {
     setCartItems((prevItems) =>
       prevItems.map((item) =>
@@ -93,7 +93,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   }, [cartItems]);
 
   const warrantyTotal = useMemo(() => {
-    return cartItems.reduce((sum, item) => sum + (item.warranty ? item.product.warrantyPrice * item.quantity : 0), 0);
+    return cartItems.reduce((sum, item) => sum + (item.warranty ? item.warranty.price * item.quantity : 0), 0);
   }, [cartItems]);
 
   const installationTotal = useMemo(() => {
@@ -110,7 +110,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     addToCart,
     removeFromCart,
     updateQuantity,
-    toggleWarranty,
+    updateWarranty,
     toggleInstallation,
     clearCart,
     itemCount,

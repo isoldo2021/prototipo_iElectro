@@ -1,3 +1,8 @@
+export type WarrantyOption = {
+  months: number;
+  price: number;
+};
+
 export type Product = {
   id: string;
   name: string;
@@ -10,6 +15,6 @@ export type Product = {
   specifications: {
     [key: string]: string;
   };
-  warrantyPrice: number;
+  warrantyOptions: WarrantyOption[];
   installationPrice?: number;
 };

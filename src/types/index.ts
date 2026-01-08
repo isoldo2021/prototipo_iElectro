@@ -17,6 +17,10 @@ export type Product = {
   slug: string;
   description: string;
   price: number;
+  originalPrice?: number;
+  installments?: number;
+  hasFreeShipping?: boolean;
+  carrefourCredit?: string;
   imageUrl: string;
   imageHint: string;
   category: 'small' | 'large';

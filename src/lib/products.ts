@@ -1,3 +1,4 @@
+
 import type { Product } from '@/types';
 
 export const products: Product[] = [
@@ -7,6 +8,10 @@ export const products: Product[] = [
     slug: 'refrigerador-frostfree-400l',
     description: 'Refrigerador moderno de acero inoxidable con dispensador de agua y tecnología FrostFree para evitar la acumulación de hielo.',
     price: 2499.99,
+    originalPrice: 2999.99,
+    installments: 9,
+    hasFreeShipping: true,
+    carrefourCredit: '9 CSI MI CARREFOUR CRÉDITO',
     imageUrl: 'https://images.unsplash.com/photo-1643356472833-5b1f2cd4ca3c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxyZWZyaWdlcmF0b3IlMjBraXRjaGVufGVufDB8fHx8MTc2NzgxMDU4MHww&ixlib=rb-4.1.0&q=80&w=1080',
     imageHint: 'refrigerator kitchen',
     category: 'large',
@@ -89,6 +94,8 @@ export const products: Product[] = [
     slug: 'smart-tv-4k-65',
     description: 'Televisor inteligente de 65 pulgadas con resolución 4K UHD, HDR y sistema operativo avanzado con tus apps favoritas.',
     price: 3200.00,
+    originalPrice: 3500.00,
+    hasFreeShipping: true,
     imageUrl: 'https://images.unsplash.com/flagged/photo-1572609239482-d3a83f976aa0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxzbWFydCUyMHR2fGVufDB8fHx8MTc2Nzg5ODY3N3ww&ixlib=rb-4.1.0&q=80&w=1080',
     imageHint: 'smart tv',
     category: 'large',

@@ -1,4 +1,5 @@
 import { ProductGrid } from '@/components/product-grid';
+import { SuggestedProducts } from '@/components/suggested-products';
 import { products } from '@/lib/products';
 
 export default function Home() {
@@ -13,7 +14,12 @@ export default function Home() {
         </p>
       </section>
 
-      <ProductGrid products={products} />
+      <SuggestedProducts />
+
+      <section className="mt-16">
+        <h2 className="text-3xl font-bold font-headline mb-8">Nuestro Catálogo</h2>
+        <ProductGrid products={products} />
+      </section>
     </div>
   );
 }

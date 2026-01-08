@@ -22,7 +22,7 @@ import { useToast } from "@/hooks/use-toast";
 
 const formSchema = z.object({
   email: z.string().email("Por favor, introduce un correo electrónico válido."),
-  password: z.string().min(6, "La contraseña debe tener al menos 6 caracteres."),
+  password: z.string().min(1, "La contraseña no puede estar vacía."),
 });
 
 export default function SignUpPage() {
@@ -93,7 +93,7 @@ export default function SignUpPage() {
                   <FormItem>
                     <FormLabel>Contraseña</FormLabel>
                     <FormControl>
-                      <Input type="password" placeholder="Mínimo 6 caracteres" {...field} />
+                      <Input type="password" placeholder="Cualquier contraseña servirá" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

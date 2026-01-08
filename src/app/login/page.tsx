@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { useAuth, useUser, initiateEmailSignIn } from "@/firebase";
+import { useAuth, useUser, initiateEmailSignIn, initiateAnonymousSignIn } from "@/firebase";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -19,10 +19,11 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { Separator } from "@/components/ui/separator";
 
 const formSchema = z.object({
   email: z.string().email("Por favor, introduce un correo electrónico válido."),
-  password: z.string().min(6, "La contraseña debe tener al menos 6 caracteres."),
+  password: z.string().min(1, "La contraseña no puede estar vacía."),
 });
 
 export default function LoginPage() {
@@ -52,6 +53,13 @@ export default function LoginPage() {
         description: "Por favor, espera un momento.",
     });
   }
+
+  const handleAnonymousSignIn = () => {
+    initiateAnonymousSignIn(auth);
+    toast({
+        title: "Iniciando sesión anónimamente...",
+    });
+  };
 
   if (isUserLoading || user) {
     return <div className="container mx-auto py-12 text-center">Cargando...</div>;
@@ -103,6 +111,14 @@ export default function LoginPage() {
               </Button>
             </form>
           </Form>
+          <div className="my-4 flex items-center">
+            <Separator className="flex-1" />
+            <span className="mx-4 text-xs text-muted-foreground">O</span>
+            <Separator className="flex-1" />
+          </div>
+          <Button variant="outline" className="w-full" onClick={handleAnonymousSignIn}>
+            Ingresar como invitado
+          </Button>
         </CardContent>
       </Card>
     </div>

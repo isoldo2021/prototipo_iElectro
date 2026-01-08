@@ -5,6 +5,8 @@ import { Providers } from '@/components/providers';
 import { SiteHeader } from '@/components/site-header';
 import { SiteFooter } from '@/components/site-footer';
 import { Toaster } from '@/components/ui/toaster';
+import { Sidebar, SidebarContent, SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
+import { CategoryMenu } from '@/components/category-menu';
 
 export const metadata: Metadata = {
   title: 'ElectroSmart',
@@ -28,11 +30,20 @@ export default function RootLayout({
       </head>
       <body className={cn('min-h-screen bg-background font-body antialiased')}>
         <Providers>
-          <div className="relative flex min-h-dvh flex-col bg-background">
-            <SiteHeader />
-            <main className="flex-1">{children}</main>
-            <SiteFooter />
-          </div>
+          <SidebarProvider>
+            <Sidebar>
+                <SidebarContent>
+                    <CategoryMenu />
+                </SidebarContent>
+            </Sidebar>
+            <SidebarInset>
+                <div className="relative flex min-h-dvh flex-col bg-background">
+                    <SiteHeader />
+                    <main className="flex-1">{children}</main>
+                    <SiteFooter />
+                </div>
+            </SidebarInset>
+          </SidebarProvider>
           <Toaster />
         </Providers>
       </body>

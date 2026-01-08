@@ -1,3 +1,4 @@
+
 export type WarrantyOption = {
   months: number;
   price: number;
@@ -24,4 +25,21 @@ export type Product = {
   };
   warrantyOptions: WarrantyOption[];
   installationPrice?: number;
+};
+
+export type Order = {
+    id: string;
+    userId: string;
+    items: {
+        product: Product;
+        quantity: number;
+        warranty: WarrantyOption | null;
+        installation: boolean;
+    }[];
+    orderDate: string; 
+    status: 'Procesando' | 'Enviado' | 'Entregado' | 'Cancelado' | 'Devuelto';
+    shipping: ShippingOption;
+    total: number;
+    dni?: string;
+    store?: string;
 };

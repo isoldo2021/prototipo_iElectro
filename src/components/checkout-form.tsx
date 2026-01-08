@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useForm } from "react-hook-form";
@@ -6,6 +7,7 @@ import * as z from "zod";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Truck, Store, Zap } from "lucide-react";
+import { collection } from "firebase/firestore";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -22,7 +24,8 @@ import { useCart } from "@/context/cart-context";
 import { useToast } from "@/hooks/use-toast";
 import { Separator } from "./ui/separator";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
-import type { ShippingOption } from "@/types";
+import type { Order, ShippingOption } from "@/types";
+import { useFirestore, useUser, addDocumentNonBlocking } from "@/firebase";
 
 const shippingOptions: ShippingOption[] = [
     { id: 'store', label: 'Recojo en Tienda', price: 0, description: 'Disponible en 24 horas' },
@@ -40,12 +43,24 @@ const formSchema = z.object({
   expiryDate: z.string().regex(/^(0[1-9]|1[0-2])\/\d{2}$/, "El formato debe ser MM/AA."),
   cvc: z.string().regex(/^\d{3,4}$/, "El CVC debe tener 3 o 4 dígitos."),
   shipping: z.enum(['store', 'home', 'immediate'], { required_error: 'Debes seleccionar un método de envío.' }),
+  dni: z.string().min(8, "El DNI debe tener al menos 8 caracteres."),
+  store: z.string().optional(),
+}).refine(data => {
+    if (data.shipping === 'store') {
+        return !!data.store && data.store.length > 0;
+    }
+    return true;
+}, {
+    message: "Por favor, selecciona una tienda para el recojo.",
+    path: ['store'],
 });
 
 export function CheckoutForm() {
-  const { total, clearCart, cartItems, setShippingOption, shippingTotal, subtotal } = useCart();
+  const { total, clearCart, cartItems, setShippingOption, shippingTotal, subtotal, warrantyTotal, installationTotal, shippingOption: selectedShippingOption } = useCart();
   const { toast } = useToast();
   const router = useRouter();
+  const firestore = useFirestore();
+  const { user } = useUser();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -58,17 +73,50 @@ export function CheckoutForm() {
       cardNumber: "",
       expiryDate: "",
       cvc: "",
+      dni: "",
     },
   });
+  
+  const shippingValue = form.watch('shipping');
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log("Order submitted:", values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    if (!user) {
+        toast({
+            variant: "destructive",
+            title: "Error",
+            description: "Debes iniciar sesión para realizar un pedido."
+        });
+        return;
+    }
+    if (!selectedShippingOption) {
+         toast({
+            variant: "destructive",
+            title: "Error",
+            description: "Debes seleccionar un método de envío."
+        });
+        return;
+    }
+
+    const orderData: Omit<Order, 'id'> = {
+        userId: user.uid,
+        items: cartItems,
+        orderDate: new Date().toISOString(),
+        status: 'Procesando',
+        shipping: selectedShippingOption,
+        total: total,
+        dni: values.dni,
+        store: values.shipping === 'store' ? values.store : undefined,
+    };
+    
+    const ordersRef = collection(firestore, `users/${user.uid}/orders`);
+    addDocumentNonBlocking(ordersRef, orderData);
+
     toast({
       title: "¡Pedido Realizado!",
       description: "Gracias por tu compra. Hemos recibido tu pedido.",
     });
     clearCart();
-    router.push("/");
+    router.push("/orders");
   }
 
   if (cartItems.length === 0) {
@@ -138,13 +186,43 @@ export function CheckoutForm() {
                     </FormItem>
                   )}
                 />
+                 {shippingValue === 'store' && (
+                  <div className="mt-4">
+                    <FormField
+                      control={form.control}
+                      name="store"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Selecciona una Tienda</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Ej: Carrefour San Miguel" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                )}
             </CardContent>
           </Card>
           <Card>
             <CardHeader>
-              <CardTitle className="font-headline">Información de Envío</CardTitle>
+              <CardTitle className="font-headline">Información de Envío y Contacto</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
+               <FormField
+                control={form.control}
+                name="dni"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>DNI</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Tu número de DNI" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
               <FormField
                 control={form.control}
                 name="name"
@@ -223,18 +301,27 @@ export function CheckoutForm() {
               <CardContent>
                   <div className="space-y-4">
                       {cartItems.map(item => (
-                          <div key={item.product.id} className="flex justify-between items-center text-sm">
+                          <div key={item.product.id} className="flex justify-between items-start text-sm">
                               <div>
-                                  <span className="font-semibold">{item.product.name}</span>
-                                  <span className="text-muted-foreground"> x {item.quantity}</span>
+                                  <p className="font-semibold">{item.product.name} <span className="text-muted-foreground">x {item.quantity}</span></p>
+                                  {item.warranty && <p className="text-xs text-muted-foreground">+ {item.warranty.months} meses garantía</p>}
+                                  {item.installation && <p className="text-xs text-muted-foreground">+ Instalación</p>}
                               </div>
                               <span>S/ {(item.product.price * item.quantity).toFixed(2)}</span>
                           </div>
                       ))}
                       <Separator />
-                      <div className="flex justify-between text-sm">
+                       <div className="flex justify-between text-sm">
                           <span className="text-muted-foreground">Subtotal</span>
                           <span>S/ {subtotal.toFixed(2)}</span>
+                      </div>
+                       <div className="flex justify-between text-sm">
+                          <span className="text-muted-foreground">Garantías</span>
+                          <span>S/ {warrantyTotal.toFixed(2)}</span>
+                      </div>
+                       <div className="flex justify-between text-sm">
+                          <span className="text-muted-foreground">Instalaciones</span>
+                          <span>S/ {installationTotal.toFixed(2)}</span>
                       </div>
                       <div className="flex justify-between text-sm">
                           <span className="text-muted-foreground">Envío</span>

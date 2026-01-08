@@ -110,6 +110,33 @@
         "installationServiceId": {
           "type": "string",
           "description": "Reference to InstallationService. (Relationship: Order 1:1 InstallationService)"
+        },
+        "status": {
+          "type": "string",
+          "description": "Current status of the order.",
+          "enum": [
+            "Procesando",
+            "Enviado",
+            "Entregado",
+            "Cancelado",
+            "Devuelto"
+          ]
+        },
+        "dni": {
+          "type": "string",
+          "description": "DNI of the person who made the order."
+        },
+        "store": {
+          "type": "string",
+          "description": "Store where the order was placed or will be picked up."
+        },
+        "returnReason": {
+          "type": "string",
+          "description": "Reason for returning the order."
+        },
+        "cancellationReason": {
+          "type": "string",
+          "description": "Reason for cancelling the order."
         }
       },
       "required": [
@@ -117,7 +144,8 @@
         "userId",
         "productIds",
         "orderDate",
-        "paymentMethod"
+        "paymentMethod",
+        "status"
       ]
     },
     "Warranty": {

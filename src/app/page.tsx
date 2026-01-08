@@ -1,4 +1,4 @@
-import { ProductGrid } from '@/components/product-grid';
+import { ProductCatalog } from '@/components/product-catalog';
 import { SuggestedProducts } from '@/components/suggested-products';
 import { products } from '@/lib/products';
 
@@ -17,8 +17,7 @@ export default function Home() {
       <SuggestedProducts />
 
       <section className="mt-16">
-        <h2 className="text-3xl font-bold font-headline mb-8">Nuestro Catálogo</h2>
-        <ProductGrid products={products} />
+        <ProductCatalog allProducts={products} />
       </section>
     </div>
   );

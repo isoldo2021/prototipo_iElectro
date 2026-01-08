@@ -1,19 +1,12 @@
 'use server';
+
 /**
  * @fileOverview Un agente de IA de asistencia al cliente.
  *
  * - getAssistance - Una función que maneja las consultas de los clientes.
- * - AssistanceInput - El tipo de entrada para la función getAssistance.
- * - AssistanceOutput - El tipo de retorno para la función getAssistance.
  */
 import { ai } from '@/ai/genkit';
-import { z } from 'zod';
-
-export const AssistanceInputSchema = z.string();
-export const AssistanceOutputSchema = z.string();
-
-export type AssistanceInput = z.infer<typeof AssistanceInputSchema>;
-export type AssistanceOutput = z.infer<typeof AssistanceOutputSchema>;
+import { AssistanceInput, AssistanceOutput, AssistanceInputSchema, AssistanceOutputSchema } from '@/ai/schemas/assistance-schema';
 
 export async function getAssistance(
   input: AssistanceInput

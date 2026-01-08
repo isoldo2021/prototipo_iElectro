@@ -53,8 +53,8 @@ export function ProductCard({ product }: ProductCardProps) {
           <Image
             src={product.imageUrl}
             alt={product.name}
-            width={600}
-            height={600}
+            width={400}
+            height={400}
             className="aspect-square w-full object-cover transition-transform duration-300 group-hover:scale-105"
             data-ai-hint={product.imageHint}
           />
@@ -64,64 +64,64 @@ export function ProductCard({ product }: ProductCardProps) {
                 ENVÍO GRATIS
             </Badge>
         )}
-         <Button variant="ghost" size="icon" className="absolute top-2 left-2 bg-white/80 backdrop-blur-sm rounded-full hover:bg-white">
-            <Heart className="h-5 w-5 text-muted-foreground"/>
+         <Button variant="ghost" size="icon" className="absolute top-2 left-2 bg-white/80 backdrop-blur-sm rounded-full hover:bg-white h-8 w-8">
+            <Heart className="h-4 w-4 text-muted-foreground"/>
         </Button>
       </div>
 
-      <CardContent className="flex-grow p-4 space-y-2">
+      <CardContent className="flex-grow p-3 space-y-1">
         {product.installments && (
             <Badge variant="destructive">{product.installments} CUOTAS SIN INTERÉS</Badge>
         )}
         {product.carrefourCredit && (
-            <div className="flex items-center gap-1 text-sm text-blue-600 font-semibold">
-                <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 fill-current"><path d="m12 0c-6.628 0-12 5.372-12 12s5.372 12 12 12 12-5.372 12-12-5.372-12-12-12zm4.282 6.6l-5.986 5.982-2.992-2.99 1.41-1.418 1.582 1.582 4.576-4.576z"/></svg>
+            <div className="flex items-center gap-1 text-xs text-blue-600 font-semibold">
+                <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 fill-current"><path d="m12 0c-6.628 0-12 5.372-12 12s5.372 12 12 12 12-5.372 12-12-5.372-12-12-12zm4.282 6.6l-5.986 5.982-2.992-2.99 1.41-1.418 1.582 1.582 4.576-4.576z"/></svg>
                 <span>{product.carrefourCredit}</span>
-                <Info className="h-4 w-4" />
+                <Info className="h-3 w-3" />
             </div>
         )}
         
         <div>
             {product.originalPrice && (
                  <div className="flex items-baseline gap-2">
-                    <p className="text-2xl font-bold text-primary">
+                    <p className="text-xl font-bold text-primary">
                         $ {product.price.toLocaleString('es-AR', {minimumFractionDigits: 2})}
                     </p>
                     {discountPercentage > 0 && <Badge variant="outline" className="border-red-500 text-red-500">-{discountPercentage}%</Badge>}
                 </div>
             )}
             {!product.originalPrice && (
-                 <p className="text-2xl font-bold text-primary">
+                 <p className="text-xl font-bold text-primary">
                     $ {product.price.toLocaleString('es-AR', {minimumFractionDigits: 2})}
                 </p>
             )}
             {product.originalPrice && (
-                <p className="text-sm text-muted-foreground line-through">
+                <p className="text-xs text-muted-foreground line-through">
                     $ {product.originalPrice.toLocaleString('es-AR', {minimumFractionDigits: 2})}
                 </p>
             )}
         </div>
 
         <Link href={`/products/${product.slug}`} className="block pt-1">
-          <p className="text-sm leading-tight text-foreground hover:text-primary">
+          <p className="text-sm leading-tight text-foreground hover:text-primary h-10">
             {product.name}
           </p>
         </Link>
       </CardContent>
 
-      <CardFooter className="flex-col items-stretch gap-2 p-4 pt-0">
-        <Button onClick={handleAddToCart}>
+      <CardFooter className="flex-col items-stretch gap-2 p-3 pt-0">
+        <Button onClick={handleAddToCart} size="sm">
           <ShoppingCart className="mr-2 h-4 w-4" />
-          Agregar al Carrito
+          Agregar
         </Button>
-        <div className="flex items-center justify-center space-x-2 rounded-md border p-2 h-10">
+        <div className="flex items-center justify-center space-x-2 rounded-md border p-1 h-9">
             <Checkbox 
                 id={`compare-${product.id}`} 
                 checked={isComparing}
                 onCheckedChange={handleToggleComparison}
                 aria-label="Comparar producto"
             />
-            <Label htmlFor={`compare-${product.id}`} className="text-sm font-medium leading-none cursor-pointer">
+            <Label htmlFor={`compare-${product.id}`} className="text-xs font-medium leading-none cursor-pointer">
                 Comparar
             </Label>
         </div>

@@ -28,7 +28,7 @@ export function SuggestedProducts() {
       >
         <CarouselContent>
           {suggestedProducts.map((product) => (
-            <CarouselItem key={product.id} className="md:basis-1/2 lg:basis-1/3">
+            <CarouselItem key={product.id} className="md:basis-1/2 lg:basis-1/4">
               <div className="p-1 h-full">
                 <ProductCard product={product} />
               </div>

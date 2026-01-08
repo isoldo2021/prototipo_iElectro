@@ -7,7 +7,7 @@ export function SiteFooter() {
         <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
             <Logo />
             <p className="text-center text-sm leading-loose text-muted-foreground md:text-left">
-                © {new Date().getFullYear()} ElectroSmart. Todos los derechos reservados.
+                © {new Date().getFullYear()} Carrefour. Todos los derechos reservados.
             </p>
         </div>
       </div>

@@ -9,7 +9,7 @@ import { Sidebar, SidebarContent, SidebarInset, SidebarProvider, SidebarTrigger 
 import { CategoryMenu } from '@/components/category-menu';
 
 export const metadata: Metadata = {
-  title: 'ElectroSmart',
+  title: 'Carrefour',
   description: 'Your one-stop shop for home appliances.',
 };
 

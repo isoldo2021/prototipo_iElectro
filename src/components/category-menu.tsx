@@ -70,7 +70,7 @@ export function CategoryMenu() {
                 <Button variant="ghost" asChild className="p-0 h-auto justify-start text-base w-full">
                     <Link href="/orders" className="flex items-center gap-2">
                         <Package className="h-5 w-5" />
-                        <span>Mis Pedidos</span>
+                        <span>Consulta de Pedidos</span>
                     </Link>
                 </Button>
             </div>

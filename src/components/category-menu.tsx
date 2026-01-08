@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/accordion"
 import { ScrollArea } from "./ui/scroll-area"
 import Link from "next/link"
-import { Package } from "lucide-react"
+import { Package, Truck } from "lucide-react"
 import { Button } from "./ui/button"
 
 const categories = [
@@ -65,12 +65,18 @@ const categories = [
 export function CategoryMenu() {
     return (
         <div className="flex flex-col h-full">
-            <div className="p-4 border-b">
-                <h2 className="text-2xl font-headline font-bold mb-2">Menú</h2>
+            <div className="p-4 border-b space-y-2">
+                <h2 className="text-2xl font-headline font-bold">Menú</h2>
                 <Button variant="ghost" asChild className="p-0 h-auto justify-start text-base w-full">
                     <Link href="/orders" className="flex items-center gap-2">
                         <Package className="h-5 w-5" />
                         <span>Consulta de Pedidos</span>
+                    </Link>
+                </Button>
+                <Button variant="ghost" asChild className="p-0 h-auto justify-start text-base w-full">
+                    <Link href="/delivery-availability" className="flex items-center gap-2">
+                        <Truck className="h-5 w-5" />
+                        <span>Disponibilidad de entrega</span>
                     </Link>
                 </Button>
             </div>

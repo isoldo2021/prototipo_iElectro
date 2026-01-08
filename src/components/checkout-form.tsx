@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Truck, Store, Zap } from "lucide-react";
+import { Truck, Store, Zap, CreditCard, Wallet } from "lucide-react";
 import { collection } from "firebase/firestore";
 
 import { Button } from "@/components/ui/button";
@@ -39,12 +39,13 @@ const formSchema = z.object({
   address: z.string().min(5, "La dirección debe tener al menos 5 caracteres."),
   city: z.string().min(2, "La ciudad debe tener al menos 2 caracteres."),
   postalCode: z.string().min(5, "El código postal debe tener al menos 5 caracteres."),
-  cardNumber: z.string().regex(/^\d{16}$/, "El número de tarjeta debe tener 16 dígitos."),
-  expiryDate: z.string().regex(/^(0[1-9]|1[0-2])\/\d{2}$/, "El formato debe ser MM/AA."),
-  cvc: z.string().regex(/^\d{3,4}$/, "El CVC debe tener 3 o 4 dígitos."),
   shipping: z.enum(['store', 'home', 'immediate'], { required_error: 'Debes seleccionar un método de envío.' }),
   dni: z.string().min(8, "El DNI debe tener al menos 8 caracteres."),
   store: z.string().optional(),
+  paymentMethod: z.enum(['creditCard', 'mercadoPago'], { required_error: 'Debes seleccionar un método de pago.' }),
+  cardNumber: z.string().optional(),
+  expiryDate: z.string().optional(),
+  cvc: z.string().optional(),
 }).refine(data => {
     if (data.shipping === 'store') {
         return !!data.store && data.store.length > 0;
@@ -53,7 +54,32 @@ const formSchema = z.object({
 }, {
     message: "Por favor, selecciona una tienda para el recojo.",
     path: ['store'],
+}).refine(data => {
+    if (data.paymentMethod === 'creditCard') {
+        return !!data.cardNumber && /^\d{16}$/.test(data.cardNumber);
+    }
+    return true;
+}, {
+    message: "El número de tarjeta debe tener 16 dígitos.",
+    path: ['cardNumber'],
+}).refine(data => {
+    if (data.paymentMethod === 'creditCard') {
+        return !!data.expiryDate && /^(0[1-9]|1[0-2])\/\d{2}$/.test(data.expiryDate);
+    }
+    return true;
+}, {
+    message: "El formato debe ser MM/AA.",
+    path: ['expiryDate'],
+}).refine(data => {
+    if (data.paymentMethod === 'creditCard') {
+        return !!data.cvc && /^\d{3,4}$/.test(data.cvc);
+    }
+    return true;
+}, {
+    message: "El CVC debe tener 3 o 4 dígitos.",
+    path: ['cvc'],
 });
+
 
 export function CheckoutForm() {
   const { total, clearCart, cartItems, setShippingOption, shippingTotal, subtotal, warrantyTotal, installationTotal, shippingOption: selectedShippingOption } = useCart();
@@ -70,14 +96,12 @@ export function CheckoutForm() {
       address: "",
       city: "",
       postalCode: "",
-      cardNumber: "",
-      expiryDate: "",
-      cvc: "",
       dni: "",
     },
   });
   
   const shippingValue = form.watch('shipping');
+  const paymentMethodValue = form.watch('paymentMethod');
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     if (!user) {
@@ -106,6 +130,7 @@ export function CheckoutForm() {
         total: total,
         dni: values.dni,
         store: values.shipping === 'store' ? values.store : undefined,
+        paymentMethod: values.paymentMethod === 'creditCard' ? 'Tarjeta de Crédito' : 'Mercado Pago',
     };
     
     const ordersRef = collection(firestore, `users/${user.uid}/orders`);
@@ -339,48 +364,91 @@ export function CheckoutForm() {
             <CardHeader>
               <CardTitle className="font-headline">Detalles de Pago</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
-               <FormField
+            <CardContent>
+              <FormField
+                control={form.control}
+                name="paymentMethod"
+                render={({ field }) => (
+                  <FormItem>
+                    <RadioGroup 
+                      onValueChange={field.onChange} 
+                      defaultValue={field.value}
+                      className="grid grid-cols-1 gap-4"
+                    >
+                      <FormItem>
+                        <FormControl>
+                           <RadioGroupItem value="creditCard" className="sr-only" />
+                        </FormControl>
+                        <FormLabel className={`flex flex-col items-start p-4 rounded-lg border-2 cursor-pointer transition-colors ${field.value === 'creditCard' ? 'border-primary bg-primary/5' : 'border-border'}`}>
+                            <div className="flex items-center gap-4 w-full">
+                                <CreditCard className="h-6 w-6 text-primary" />
+                                <span className="font-semibold">Tarjeta de Crédito/Débito</span>
+                            </div>
+                        </FormLabel>
+                      </FormItem>
+
+                      <FormItem>
+                         <FormControl>
+                           <RadioGroupItem value="mercadoPago" className="sr-only" />
+                         </FormControl>
+                         <FormLabel className={`flex flex-col items-start p-4 rounded-lg border-2 cursor-pointer transition-colors ${field.value === 'mercadoPago' ? 'border-primary bg-primary/5' : 'border-border'}`}>
+                            <div className="flex items-center gap-4 w-full">
+                                <Wallet className="h-6 w-6 text-primary" />
+                                <span className="font-semibold">Mercado Pago</span>
+                            </div>
+                         </FormLabel>
+                      </FormItem>
+                    </RadioGroup>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {paymentMethodValue === 'creditCard' && (
+                <div className="space-y-4 mt-6">
+                  <FormField
                     control={form.control}
                     name="cardNumber"
                     render={({ field }) => (
-                    <FormItem>
+                      <FormItem>
                         <FormLabel>Número de Tarjeta</FormLabel>
                         <FormControl>
-                        <Input placeholder="**** **** **** ****" {...field} />
+                          <Input placeholder="**** **** **** ****" {...field} />
                         </FormControl>
                         <FormMessage />
-                    </FormItem>
+                      </FormItem>
                     )}
-                />
-                <div className="grid grid-cols-2 gap-4">
+                  />
+                  <div className="grid grid-cols-2 gap-4">
                     <FormField
-                        control={form.control}
-                        name="expiryDate"
-                        render={({ field }) => (
+                      control={form.control}
+                      name="expiryDate"
+                      render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Vencimiento (MM/AA)</FormLabel>
-                            <FormControl>
+                          <FormLabel>Vencimiento (MM/AA)</FormLabel>
+                          <FormControl>
                             <Input placeholder="12/28" {...field} />
-                            </FormControl>
-                            <FormMessage />
+                          </FormControl>
+                          <FormMessage />
                         </FormItem>
-                        )}
+                      )}
                     />
                     <FormField
-                        control={form.control}
-                        name="cvc"
-                        render={({ field }) => (
+                      control={form.control}
+                      name="cvc"
+                      render={({ field }) => (
                         <FormItem>
-                            <FormLabel>CVC</FormLabel>
-                            <FormControl>
+                          <FormLabel>CVC</FormLabel>
+                          <FormControl>
                             <Input placeholder="123" {...field} />
-                            </FormControl>
-                            <FormMessage />
+                          </FormControl>
+                          <FormMessage />
                         </FormItem>
-                        )}
+                      )}
                     />
+                  </div>
                 </div>
+              )}
             </CardContent>
           </Card>
 

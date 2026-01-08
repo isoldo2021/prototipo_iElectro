@@ -42,4 +42,5 @@ export type Order = {
     total: number;
     dni?: string;
     store?: string;
+    paymentMethod: string;
 };

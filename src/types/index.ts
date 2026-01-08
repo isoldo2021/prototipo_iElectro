@@ -26,6 +26,10 @@ export type Product = {
   warrantyOptions: WarrantyOption[];
   installationPrice?: number;
   seller?: string;
+  stock: number;
+  stockByStore?: {
+      [storeId: string]: number;
+  };
 };
 
 export type Order = {

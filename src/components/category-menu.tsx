@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/accordion"
 import { ScrollArea } from "./ui/scroll-area"
 import Link from "next/link"
-import { Package, Truck, ScanSearch } from "lucide-react"
+import { Package, Truck, ScanSearch, PackageSearch } from "lucide-react"
 import { Button } from "./ui/button"
 
 const categories = [
@@ -77,6 +77,12 @@ export function CategoryMenu() {
                     <Link href="/orders" className="flex items-center gap-2">
                         <Package className="h-5 w-5" />
                         <span>Consulta de Pedidos</span>
+                    </Link>
+                </Button>
+                 <Button variant="ghost" asChild className="p-0 h-auto justify-start text-base w-full">
+                    <Link href="/stock-availability" className="flex items-center gap-2">
+                        <PackageSearch className="h-5 w-5" />
+                        <span>Consulta de Stock</span>
                     </Link>
                 </Button>
                 <Button variant="ghost" asChild className="p-0 h-auto justify-start text-base w-full">

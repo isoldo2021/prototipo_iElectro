@@ -31,6 +31,17 @@
         "technicalSpecifications": {
           "type": "string",
           "description": "Technical specifications of the product, stored as a JSON string."
+        },
+        "stock": {
+          "type": "number",
+          "description": "Available stock quantity for online sales."
+        },
+        "stockByStore": {
+            "type": "object",
+            "description": "Stock quantity available in physical stores.",
+            "additionalProperties": {
+                "type": "number"
+            }
         }
       },
       "required": [
@@ -39,7 +50,8 @@
         "description",
         "imageUrl",
         "price",
-        "technicalSpecifications"
+        "technicalSpecifications",
+        "stock"
       ]
     },
     "ShoppingCart": {

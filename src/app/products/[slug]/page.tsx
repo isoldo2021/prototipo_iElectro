@@ -1,8 +1,8 @@
 "use client";
 
-import { notFound } from "next/navigation";
+import { notFound, useRouter } from "next/navigation";
 import Image from "next/image";
-import { ShoppingCart, ShieldCheck, Wrench } from "lucide-react";
+import { ShoppingCart, ShieldCheck, Wrench, CheckCircle2, XCircle, Store } from "lucide-react";
 
 import { getProductBySlug, products } from "@/lib/products";
 import { Button } from "@/components/ui/button";
@@ -20,10 +20,12 @@ import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import type { WarrantyOption } from "@/types";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Badge } from "@/components/ui/badge";
 
 export default function ProductPage({ params }: { params: { slug: string } }) {
   const { addToCart } = useCart();
   const { toast } = useToast();
+  const router = useRouter();
   const [selectedWarranty, setSelectedWarranty] = useState<WarrantyOption | null>(null);
   const [installationSelected, setInstallationSelected] = useState(false);
 
@@ -35,12 +37,24 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
   }
 
   const handleAddToCart = () => {
-    addToCart(product, 1, selectedWarranty, installationSelected);
-    toast({
-      title: "Agregado al carrito",
-      description: `${product.name} ha sido agregado a tu carrito.`,
-    });
+    if (product.stock > 0) {
+      addToCart(product, 1, selectedWarranty, installationSelected);
+      toast({
+        title: "Agregado al carrito",
+        description: `${product.name} ha sido agregado a tu carrito.`,
+      });
+    } else {
+       toast({
+        variant: "destructive",
+        title: "Sin stock",
+        description: "Este producto no está disponible para compra online.",
+      });
+    }
   };
+
+  const handleConsultStock = () => {
+    router.push(`/stock-availability?productId=${product.id}`);
+  }
 
   const relatedProducts = products.filter(p => p.category === product.category && p.id !== product.id).slice(0, 3);
 
@@ -69,10 +83,22 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
           <p className="text-muted-foreground text-lg mb-6">
             {product.description}
           </p>
-          <div className="mb-6">
+
+          <div className="mb-6 flex items-center gap-4">
             <span className="text-4xl font-bold text-primary">
               S/ {product.price.toFixed(2)}
             </span>
+             {product.stock > 0 ? (
+                <Badge variant="outline" className="text-green-600 border-green-600">
+                    <CheckCircle2 className="mr-2 h-4 w-4" />
+                    En Stock
+                </Badge>
+            ) : (
+                 <Badge variant="destructive">
+                    <XCircle className="mr-2 h-4 w-4" />
+                    Sin Stock Online
+                </Badge>
+            )}
           </div>
 
           <div className="flex flex-col gap-4 mb-8">
@@ -110,10 +136,17 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
             )}
           </div>
           
-          <Button size="lg" className="w-full text-lg" onClick={handleAddToCart}>
-            <ShoppingCart className="mr-2 h-5 w-5" />
-            Agregar al Carrito
-          </Button>
+           {product.stock > 0 ? (
+                <Button size="lg" className="w-full text-lg" onClick={handleAddToCart}>
+                    <ShoppingCart className="mr-2 h-5 w-5" />
+                    Agregar al Carrito
+                </Button>
+            ) : (
+                 <Button size="lg" className="w-full text-lg" variant="secondary" onClick={handleConsultStock}>
+                    <Store className="mr-2 h-5 w-5" />
+                    Consultar stock en sucursales
+                </Button>
+            )}
         </div>
       </div>
 

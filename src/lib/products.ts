@@ -22,6 +22,12 @@ export const products: Product[] = [
         { months: 24, price: 450 },
     ],
     installationPrice: 150,
+    stock: 15,
+    stockByStore: {
+      "store-1": 5,
+      "store-2": 2,
+      "store-3": 8,
+    }
   },
   {
     id: 'prod_002',
@@ -44,6 +50,12 @@ export const products: Product[] = [
         { months: 24, price: 340 },
     ],
     installationPrice: 100,
+    stock: 20,
+    stockByStore: {
+      "store-1": 10,
+      "store-2": 5,
+      "store-3": 5,
+    }
   },
   {
     id: 'prod_003',
@@ -64,6 +76,12 @@ export const products: Product[] = [
     warrantyOptions: [
         { months: 12, price: 60 },
     ],
+    stock: 50,
+    stockByStore: {
+      "store-1": 20,
+      "store-2": 15,
+      "store-3": 15,
+    }
   },
   {
     id: 'prod_004',
@@ -86,6 +104,12 @@ export const products: Product[] = [
         { months: 24, price: 580 },
     ],
     installationPrice: 200,
+    stock: 0,
+    stockByStore: {
+      "store-1": 0,
+      "store-2": 3,
+      "store-3": 1,
+    }
   },
   {
     id: 'prod_005',
@@ -106,6 +130,7 @@ export const products: Product[] = [
     warrantyOptions: [
         { months: 12, price: 25 },
     ],
+    stock: 30,
   },
   {
     id: 'prod_006',
@@ -126,7 +151,13 @@ export const products: Product[] = [
     warrantyOptions: [
         { months: 12, price: 45 },
     ],
-    seller: 'ElectroHogar'
+    seller: 'ElectroHogar',
+    stock: 0,
+    stockByStore: {
+      "store-1": 1,
+      "store-2": 0,
+      "store-3": 4,
+    }
   },
 ];
 

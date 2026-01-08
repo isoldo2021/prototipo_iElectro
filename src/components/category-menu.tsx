@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/accordion"
 import { ScrollArea } from "./ui/scroll-area"
 import Link from "next/link"
+import { Package } from "lucide-react"
 import { Button } from "./ui/button"
 
 const categories = [
@@ -64,30 +65,41 @@ const categories = [
 export function CategoryMenu() {
     return (
         <div className="flex flex-col h-full">
-            <div className="p-4">
-                <h2 className="text-2xl font-headline font-bold">Electro y tecnología</h2>
-                <Button variant="link" asChild className="p-0 h-auto text-base">
-                    <Link href="/">VER TODOS LOS PRODUCTOS</Link>
+            <div className="p-4 border-b">
+                <h2 className="text-2xl font-headline font-bold mb-2">Menú</h2>
+                <Button variant="ghost" asChild className="p-0 h-auto justify-start text-base w-full">
+                    <Link href="/orders" className="flex items-center gap-2">
+                        <Package className="h-5 w-5" />
+                        <span>Mis Pedidos</span>
+                    </Link>
                 </Button>
             </div>
             <ScrollArea className="flex-1">
-                <Accordion type="multiple" className="w-full p-4">
+                <div className="p-4">
+                     <h3 className="text-lg font-headline font-semibold mb-2">Categorías de Productos</h3>
+                     <Button variant="link" asChild className="p-0 h-auto text-base">
+                        <Link href="/">Ver todos los productos</Link>
+                    </Button>
+                </div>
+                <Accordion type="multiple" className="w-full px-4">
                     {categories.map((category) => (
                         <AccordionItem value={category.name} key={category.name}>
                             <AccordionTrigger className="text-base font-semibold hover:no-underline">
                                 <Link href="#" className="hover:underline">{category.name}</Link>
                             </AccordionTrigger>
-                            <AccordionContent>
-                                <ul className="flex flex-col gap-2 pl-4 pt-2">
-                                    {category.subcategories.map((subcategory) => (
-                                        <li key={subcategory}>
-                                            <Link href="#" className="text-muted-foreground hover:text-foreground hover:underline">
-                                                {subcategory}
-                                            </Link>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </AccordionContent>
+                            {category.subcategories.length > 0 && (
+                                <AccordionContent>
+                                    <ul className="flex flex-col gap-2 pl-4 pt-2">
+                                        {category.subcategories.map((subcategory) => (
+                                            <li key={subcategory}>
+                                                <Link href="#" className="text-muted-foreground hover:text-foreground hover:underline">
+                                                    {subcategory}
+                                                </Link>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </AccordionContent>
+                            )}
                         </AccordionItem>
                     ))}
                 </Accordion>

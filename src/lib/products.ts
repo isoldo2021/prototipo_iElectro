@@ -7,7 +7,7 @@ export const products: Product[] = [
     slug: 'refrigerador-frostfree-400l',
     description: 'Refrigerador moderno de acero inoxidable con dispensador de agua y tecnología FrostFree para evitar la acumulación de hielo.',
     price: 2499.99,
-    imageUrl: 'https://picsum.photos/seed/101/800/1200',
+    imageUrl: 'https://images.unsplash.com/photo-1643356472833-5b1f2cd4ca3c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxyZWZyaWdlcmF0b3IlMjBraXRjaGVufGVufDB8fHx8MTc2NzgxMDU4MHww&ixlib=rb-4.1.0&q=80&w=1080',
     imageHint: 'refrigerator kitchen',
     category: 'large',
     specifications: {
@@ -29,7 +29,7 @@ export const products: Product[] = [
     slug: 'lavadora-carga-frontal-8kg',
     description: 'Lavadora de carga frontal con capacidad de 8kg, múltiples programas de lavado y motor inverter silencioso.',
     price: 1899.00,
-    imageUrl: 'https://picsum.photos/seed/102/800/800',
+    imageUrl: 'https://images.unsplash.com/photo-1668417863230-64f268d1d252?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8d2FzaGluZyUyMG1hY2hpbmV8ZW58MHx8fHwxNzY3ODk4Njc3fDA&ixlib=rb-4.1.0&q=80&w=1080',
     imageHint: 'washing machine',
     category: 'large',
     specifications: {
@@ -51,7 +51,7 @@ export const products: Product[] = [
     slug: 'horno-microondas-grill-25l',
     description: 'Horno microondas de diseño elegante en color negro, con función grill y 25 litros de capacidad.',
     price: 599.50,
-    imageUrl: 'https://picsum.photos/seed/103/800/600',
+    imageUrl: 'https://images.unsplash.com/photo-1626143508000-4b5904e5e84a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxtaWNyb3dhdmUlMjBvdmVufGVufDB8fHx8MTc2Nzg1NDE3NXww&ixlib=rb-4.1.0&q=80&w=1080',
     imageHint: 'microwave oven',
     category: 'small',
     specifications: {
@@ -71,7 +71,7 @@ export const products: Product[] = [
     slug: 'smart-tv-4k-65',
     description: 'Televisor inteligente de 65 pulgadas con resolución 4K UHD, HDR y sistema operativo avanzado con tus apps favoritas.',
     price: 3200.00,
-    imageUrl: 'https://picsum.photos/seed/104/1200/800',
+    imageUrl: 'https://images.unsplash.com/flagged/photo-1572609239482-d3a83f976aa0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxzbWFydCUyMHR2fGVufDB8fHx8MTc2Nzg5ODY3N3ww&ixlib=rb-4.1.0&q=80&w=1080',
     imageHint: 'smart tv',
     category: 'large',
     specifications: {
@@ -93,7 +93,7 @@ export const products: Product[] = [
     slug: 'cafetera-goteo-programable',
     description: 'Prepara el café perfecto cada mañana. Cafetera de goteo programable con jarra de vidrio y filtro permanente.',
     price: 250.00,
-    imageUrl: 'https://picsum.photos/seed/105/800/1000',
+    imageUrl: 'https://images.unsplash.com/photo-1515442261605-65987783cb6a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Y29mZmVlJTIwbWFrZXJ8ZW58MHx8fHwxNzY3ODcxNzIxfDA&ixlib=rb-4.1.0&q=80&w=1080',
     imageHint: 'coffee maker',
     category: 'small',
     specifications: {
@@ -113,7 +113,7 @@ export const products: Product[] = [
     slug: 'licuadora-alta-potencia',
     description: 'Licuadora de alta velocidad ideal para smoothies, sopas y más. Con vaso de tritan resistente y cuchillas de acero.',
     price: 450.00,
-    imageUrl: 'https://picsum.photos/seed/106/800/1000',
+    imageUrl: 'https://images.unsplash.com/photo-1564940735784-b15466e8dc09?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxraXRjaGVuJTIwYmxlbmRlcnxlbnwwfHx8fDE3Njc3OTUyMjB8MA&ixlib=rb-4.1.0&q=80&w=1080',
     imageHint: 'kitchen blender',
     category: 'small',
     specifications: {

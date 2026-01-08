@@ -18,13 +18,18 @@ export function SiteHeader() {
       <div className="container mx-auto flex h-20 items-center justify-between gap-4">
         <div className="flex items-center gap-4">
           <Logo />
-           <SidebarTrigger asChild>
-              <Button variant="outline" className="hidden md:flex items-center gap-2">
+          <SidebarTrigger>
+            <Button variant="outline" className="hidden md:flex items-center gap-2">
+              <Menu className="h-5 w-5" />
+              <span className="font-semibold">Categorías</span>
+            </Button>
+          </SidebarTrigger>
+          <SidebarTrigger className="md:hidden">
+            <Button variant="ghost" size="icon">
                 <Menu className="h-5 w-5" />
-                <span className="font-semibold">Categorías</span>
-              </Button>
-            </SidebarTrigger>
-          <SidebarTrigger className="md:hidden"/>
+                <span className="sr-only">Toggle Menu</span>
+            </Button>
+          </SidebarTrigger>
         </div>
 
         <div className="flex-1 max-w-xl hidden md:flex">

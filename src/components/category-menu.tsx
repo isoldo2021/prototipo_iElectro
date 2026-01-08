@@ -16,7 +16,12 @@ export function CategoryMenu() {
     return (
         <div className="flex flex-col h-full">
             <div className="p-4 border-b space-y-2">
-                <h2 className="text-2xl font-headline font-bold">Menú</h2>
+                <h2 className="text-2xl font-headline font-bold">Categorías</h2>
+            </div>
+            <ScrollArea className="flex-1">
+                <ProductFilters />
+            </ScrollArea>
+             <div className="p-4 border-t mt-auto space-y-2">
                 <Button variant="ghost" asChild className="p-0 h-auto justify-start text-base w-full">
                     <Link href="/scan-price" className="flex items-center gap-2">
                         <ScanSearch className="h-5 w-5" />
@@ -42,9 +47,6 @@ export function CategoryMenu() {
                     </Link>
                 </Button>
             </div>
-            <ScrollArea className="flex-1">
-                <ProductFilters />
-            </ScrollArea>
         </div>
     )
 }

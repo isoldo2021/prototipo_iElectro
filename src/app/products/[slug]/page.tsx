@@ -19,11 +19,13 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import type { WarrantyOption } from "@/types";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export default function ProductPage({ params }: { params: { slug: string } }) {
   const { addToCart } = useCart();
   const { toast } = useToast();
   const [selectedWarranty, setSelectedWarranty] = useState<WarrantyOption | null>(null);
+  const [installationSelected, setInstallationSelected] = useState(false);
 
 
   const product = getProductBySlug(params.slug);
@@ -33,7 +35,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
   }
 
   const handleAddToCart = () => {
-    addToCart(product, 1, selectedWarranty);
+    addToCart(product, 1, selectedWarranty, installationSelected);
     toast({
       title: "Agregado al carrito",
       description: `${product.name} ha sido agregado a tu carrito.`,
@@ -89,11 +91,15 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
                 </div>
             </div>
             {product.installationPrice && (
-                <div className="flex items-center gap-3 rounded-lg border p-4">
-                    <Wrench className="h-8 w-8 text-primary" />
+                <div className="flex items-start gap-3 rounded-lg border p-4">
+                    <Wrench className="h-8 w-8 text-primary mt-1 flex-shrink-0" />
                     <div>
                         <h3 className="font-semibold">Servicio de Instalación</h3>
-                        <p className="text-sm text-muted-foreground">Deja que nuestros expertos lo instalen por S/ {product.installationPrice.toFixed(2)}.</p>
+                        <p className="text-sm text-muted-foreground mb-3">Deja que nuestros expertos lo instalen por S/ {product.installationPrice.toFixed(2)}.</p>
+                        <div className="flex items-center space-x-2">
+                            <Checkbox id="installation" checked={installationSelected} onCheckedChange={(checked) => setInstallationSelected(checked as boolean)} />
+                            <Label htmlFor="installation">Sí, deseo el servicio de instalación</Label>
+                        </div>
                     </div>
                 </div>
             )}

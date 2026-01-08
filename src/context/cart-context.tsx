@@ -12,7 +12,7 @@ export interface CartItem {
 
 interface CartContextType {
   cartItems: CartItem[];
-  addToCart: (product: Product, quantity?: number, warranty?: WarrantyOption | null) => void;
+  addToCart: (product: Product, quantity?: number, warranty?: WarrantyOption | null, installation?: boolean) => void;
   removeFromCart: (productId: string) => void;
   updateQuantity: (productId: string, quantity: number) => void;
   updateWarranty: (productId: string, warranty: WarrantyOption | null) => void;
@@ -39,7 +39,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     // In a real app, you might load the cart from localStorage
   }, []);
 
-  const addToCart = (product: Product, quantity = 1, warranty: WarrantyOption | null = null) => {
+  const addToCart = (product: Product, quantity = 1, warranty: WarrantyOption | null = null, installation = false) => {
     setCartItems((prevItems) => {
       const existingItem = prevItems.find((item) => item.product.id === product.id);
       if (existingItem) {
@@ -49,7 +49,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
             : item
         );
       }
-      return [...prevItems, { product, quantity, warranty, installation: false }];
+      return [...prevItems, { product, quantity, warranty, installation }];
     });
   };
 

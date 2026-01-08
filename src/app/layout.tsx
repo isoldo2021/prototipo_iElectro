@@ -8,7 +8,6 @@ import { Toaster } from '@/components/ui/toaster';
 import { Sidebar, SidebarContent, SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { CategoryMenu } from '@/components/category-menu';
 import { FirebaseClientProvider } from '@/firebase';
-import { HelpChatbox } from '@/components/help-chatbox';
 
 export const metadata: Metadata = {
   title: 'Carrefour',
@@ -44,7 +43,6 @@ export default function RootLayout({
                       <SiteHeader />
                       <main className="flex-1">{children}</main>
                       <SiteFooter />
-                      <HelpChatbox />
                   </div>
               </SidebarInset>
             </SidebarProvider>

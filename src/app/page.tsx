@@ -1,5 +1,4 @@
 import { ProductCatalog } from '@/components/product-catalog';
-import { SuggestedProducts } from '@/components/suggested-products';
 import { products } from '@/lib/products';
 
 export default function Home() {
@@ -13,8 +12,6 @@ export default function Home() {
           La mejor tecnología para tu hogar. Explora nuestra selección de electrodomésticos de última generación.
         </p>
       </section>
-
-      <SuggestedProducts />
 
       <section className="mt-16">
         <ProductCatalog allProducts={products} />

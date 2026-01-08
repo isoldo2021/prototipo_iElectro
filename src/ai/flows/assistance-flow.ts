@@ -1,3 +1,5 @@
+
+'use server';
 /**
  * @fileOverview Un agente de IA de asistencia al cliente.
  *
@@ -5,7 +7,6 @@
  * - AssistanceInputSchema - El tipo de entrada para la función getAssistance.
  * - AssistanceOutputSchema - El tipo de retorno para la función getAssistance.
  */
-'use server';
 import { ai } from '@/ai/genkit';
 import { z } from 'zod';
 

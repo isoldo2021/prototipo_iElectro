@@ -48,16 +48,18 @@ export function ProductCard({ product }: ProductCardProps) {
 
   return (
     <Card className="flex h-full flex-col overflow-hidden transition-shadow duration-300 hover:shadow-lg group text-xs">
-      <div className="relative overflow-hidden">
+      <div className="relative">
         <Link href={`/products/${product.slug}`} className="block">
-          <Image
-            src={product.imageUrl}
-            alt={product.name}
-            width={200}
-            height={200}
-            className="aspect-square w-full object-cover transition-transform duration-300 group-hover:scale-105"
-            data-ai-hint={product.imageHint}
-          />
+           <div className="aspect-square w-full bg-white flex items-center justify-center p-4">
+              <Image
+                src={product.imageUrl}
+                alt={product.name}
+                width={150}
+                height={150}
+                className="h-full w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+                data-ai-hint={product.imageHint}
+              />
+           </div>
         </Link>
         {product.hasFreeShipping && (
             <Badge className="absolute top-2 right-2 bg-blue-600 text-white hover:bg-blue-700 text-[10px] px-1.5 py-0.5">

@@ -3,7 +3,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ShoppingCart, Layers, Heart, Info } from "lucide-react";
+import { ShoppingCart, Layers, Heart, Info, Store } from "lucide-react";
 
 import {
   Card,
@@ -45,6 +45,8 @@ export function ProductCard({ product }: ProductCardProps) {
   const discountPercentage = product.originalPrice 
     ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
     : 0;
+
+  const hasStoreStock = product.stockByStore && Object.values(product.stockByStore).some(s => s > 0);
 
   return (
     <Card className="flex h-full flex-col overflow-hidden transition-shadow duration-300 hover:shadow-lg group text-xs">
@@ -112,6 +114,12 @@ export function ProductCard({ product }: ProductCardProps) {
       </CardContent>
 
       <CardFooter className="flex-col items-stretch gap-1 p-2 pt-0">
+        {hasStoreStock && (
+            <div className="flex items-center justify-center gap-1.5 text-muted-foreground text-[11px] py-1">
+                <Store className="h-3.5 w-3.5" />
+                <span>Retiro en tienda</span>
+            </div>
+        )}
         <Button onClick={handleAddToCart} size="sm" className="h-8 text-xs">
           <ShoppingCart className="mr-2 h-3.5 w-3.5" />
           Agregar

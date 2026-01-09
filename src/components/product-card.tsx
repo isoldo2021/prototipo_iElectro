@@ -47,34 +47,34 @@ export function ProductCard({ product }: ProductCardProps) {
     : 0;
 
   return (
-    <Card className="flex h-full flex-col overflow-hidden transition-shadow duration-300 hover:shadow-lg group">
+    <Card className="flex h-full flex-col overflow-hidden transition-shadow duration-300 hover:shadow-lg group text-xs">
       <div className="relative overflow-hidden">
         <Link href={`/products/${product.slug}`} className="block">
           <Image
             src={product.imageUrl}
             alt={product.name}
-            width={400}
-            height={400}
+            width={200}
+            height={200}
             className="aspect-square w-full object-cover transition-transform duration-300 group-hover:scale-105"
             data-ai-hint={product.imageHint}
           />
         </Link>
         {product.hasFreeShipping && (
-            <Badge className="absolute top-2 right-2 bg-blue-600 text-white hover:bg-blue-700">
+            <Badge className="absolute top-2 right-2 bg-blue-600 text-white hover:bg-blue-700 text-[10px] px-1.5 py-0.5">
                 ENVÍO GRATIS
             </Badge>
         )}
-         <Button variant="ghost" size="icon" className="absolute top-2 left-2 bg-white/80 backdrop-blur-sm rounded-full hover:bg-white h-8 w-8">
-            <Heart className="h-4 w-4 text-muted-foreground"/>
+         <Button variant="ghost" size="icon" className="absolute top-2 left-2 bg-white/80 backdrop-blur-sm rounded-full hover:bg-white h-7 w-7">
+            <Heart className="h-3.5 w-3.5 text-muted-foreground"/>
         </Button>
       </div>
 
-      <CardContent className="flex-grow p-3 space-y-1">
+      <CardContent className="flex-grow p-2 space-y-1">
         {product.installments && (
-            <Badge variant="destructive">{product.installments} CUOTAS SIN INTERÉS</Badge>
+            <Badge variant="destructive" className="text-[10px] px-1.5 py-0.5">{product.installments} CUOTAS SIN INTERÉS</Badge>
         )}
         {product.carrefourCredit && (
-            <div className="flex items-center gap-1 text-xs text-blue-600 font-semibold">
+            <div className="flex items-center gap-1 text-[11px] text-blue-600 font-semibold">
                 <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 fill-current"><path d="m12 0c-6.628 0-12 5.372-12 12s5.372 12 12 12 12-5.372 12-12-5.372-12-12-12zm4.282 6.6l-5.986 5.982-2.992-2.99 1.41-1.418 1.582 1.582 4.576-4.576z"/></svg>
                 <span>{product.carrefourCredit}</span>
                 <Info className="h-3 w-3" />
@@ -83,45 +83,46 @@ export function ProductCard({ product }: ProductCardProps) {
         
         <div>
             {product.originalPrice && (
-                 <div className="flex items-baseline gap-2">
-                    <p className="text-xl font-bold text-primary">
+                 <div className="flex items-baseline gap-1">
+                    <p className="text-lg font-bold text-primary">
                         $ {product.price.toLocaleString('es-AR', {minimumFractionDigits: 2})}
                     </p>
-                    {discountPercentage > 0 && <Badge variant="outline" className="border-red-500 text-red-500">-{discountPercentage}%</Badge>}
+                    {discountPercentage > 0 && <Badge variant="outline" className="border-red-500 text-red-500 text-[10px] px-1 py-0">-{discountPercentage}%</Badge>}
                 </div>
             )}
             {!product.originalPrice && (
-                 <p className="text-xl font-bold text-primary">
+                 <p className="text-lg font-bold text-primary">
                     $ {product.price.toLocaleString('es-AR', {minimumFractionDigits: 2})}
                 </p>
             )}
             {product.originalPrice && (
-                <p className="text-xs text-muted-foreground line-through">
+                <p className="text-[11px] text-muted-foreground line-through">
                     $ {product.originalPrice.toLocaleString('es-AR', {minimumFractionDigits: 2})}
                 </p>
             )}
         </div>
 
-        <Link href={`/products/${product.slug}`} className="block pt-1">
-          <p className="text-sm leading-tight text-foreground hover:text-primary h-10">
+        <Link href={`/products/${product.slug}`} className="block pt-0.5">
+          <p className="leading-tight text-foreground hover:text-primary h-8 text-xs">
             {product.name}
           </p>
         </Link>
       </CardContent>
 
-      <CardFooter className="flex-col items-stretch gap-2 p-3 pt-0">
-        <Button onClick={handleAddToCart} size="sm">
-          <ShoppingCart className="mr-2 h-4 w-4" />
+      <CardFooter className="flex-col items-stretch gap-1 p-2 pt-0">
+        <Button onClick={handleAddToCart} size="sm" className="h-8 text-xs">
+          <ShoppingCart className="mr-2 h-3.5 w-3.5" />
           Agregar
         </Button>
-        <div className="flex items-center justify-center space-x-2 rounded-md border p-1 h-9">
+        <div className="flex items-center justify-center space-x-2 rounded-md border p-1 h-8">
             <Checkbox 
                 id={`compare-${product.id}`} 
                 checked={isComparing}
                 onCheckedChange={handleToggleComparison}
                 aria-label="Comparar producto"
+                className="h-3.5 w-3.5"
             />
-            <Label htmlFor={`compare-${product.id}`} className="text-xs font-medium leading-none cursor-pointer">
+            <Label htmlFor={`compare-${product.id}`} className="text-[11px] font-medium leading-none cursor-pointer">
                 Comparar
             </Label>
         </div>

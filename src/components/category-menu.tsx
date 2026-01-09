@@ -5,6 +5,7 @@ import Link from "next/link"
 import { Package, Truck, ScanSearch, PackageSearch } from "lucide-react"
 import { Button } from "./ui/button"
 import { ProductFilters } from "./product-filters"
+import { Separator } from "./ui/separator"
 
 export function CategoryMenu() {
     return (
@@ -13,6 +14,7 @@ export function CategoryMenu() {
                 <ProductFilters />
             </ScrollArea>
              <div className="p-4 border-t mt-auto space-y-2">
+                 <Separator className="mb-4" />
                 <Button variant="ghost" asChild className="p-0 h-auto justify-start text-base w-full">
                     <Link href="/scan-price" className="flex items-center gap-2">
                         <ScanSearch className="h-5 w-5" />

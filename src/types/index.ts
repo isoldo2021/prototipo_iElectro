@@ -21,7 +21,7 @@ export type Product = {
   installments?: number;
   hasFreeShipping?: boolean;
   carrefourCredit?: string;
-  imageUrl: string;
+  imageUrls: string[];
   imageHint: string;
   category: 'small' | 'large';
   specifications: {

@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useComparison } from "@/context/comparison-context";
@@ -24,7 +25,7 @@ export function ComparisonBar() {
               {comparisonItems.map((item) => (
                 <div key={item.id} className="relative">
                   <Image
-                    src={item.imageUrl}
+                    src={item.imageUrls[0]}
                     alt={item.name}
                     width={48}
                     height={48}

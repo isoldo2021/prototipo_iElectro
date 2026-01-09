@@ -1,8 +1,16 @@
+
 "use client";
 
 import { notFound, useRouter } from "next/navigation";
 import Image from "next/image";
 import { ShoppingCart, ShieldCheck, Wrench, CheckCircle2, XCircle, Store } from "lucide-react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
 
 import { getProductBySlug, products } from "@/lib/products";
 import { Button } from "@/components/ui/button";
@@ -61,17 +69,31 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
   return (
     <div className="container mx-auto py-12">
       <div className="grid md:grid-cols-2 gap-12 items-start">
-        <div className="rounded-lg overflow-hidden border">
-          <div className="aspect-square w-full bg-white flex items-center justify-center p-4">
-            <Image
-              src={product.imageUrl}
-              alt={product.name}
-              width={400}
-              height={400}
-              className="w-auto h-auto object-contain max-h-full max-w-full"
-              data-ai-hint={product.imageHint}
-            />
-          </div>
+        <div>
+           <Carousel className="w-full max-w-xl mx-auto">
+              <CarouselContent>
+                {product.imageUrls.map((url, index) => (
+                  <CarouselItem key={index}>
+                    <div className="aspect-square w-full rounded-lg overflow-hidden border bg-white flex items-center justify-center p-4">
+                      <Image
+                        src={url}
+                        alt={`${product.name} - image ${index + 1}`}
+                        width={400}
+                        height={400}
+                        className="w-auto h-auto object-contain max-h-full max-w-full"
+                        data-ai-hint={product.imageHint}
+                      />
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              {product.imageUrls.length > 1 && (
+                <>
+                  <CarouselPrevious className="left-2" />
+                  <CarouselNext className="right-2" />
+                </>
+              )}
+            </Carousel>
         </div>
         <div>
           <h1 className="text-3xl md:text-4xl font-bold font-headline mb-2">

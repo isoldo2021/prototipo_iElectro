@@ -12,7 +12,11 @@ export const products: Product[] = [
     installments: 9,
     hasFreeShipping: true,
     carrefourCredit: '9 CSI MI CARREFOUR CRÉDITO',
-    imageUrl: 'https://images.unsplash.com/photo-1643356472833-5b1f2cd4ca3c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxyZWZyaWdlcmF0b3IlMjBraXRjaGVufGVufDB8fHx8MTc2NzgxMDU4MHww&ixlib=rb-4.1.0&q=80&w=1080',
+    imageUrls: [
+      'https://images.unsplash.com/photo-1643356472833-5b1f2cd4ca3c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxyZWZyaWdlcmF0b3IlMjBraXRjaGVufGVufDB8fHx8MTc2NzgxMDU4MHww&ixlib=rb-4.1.0&q=80&w=1080',
+      'https://picsum.photos/seed/fridge2/800/800',
+      'https://picsum.photos/seed/fridge3/800/800',
+    ],
     imageHint: 'refrigerator kitchen',
     category: 'large',
     specifications: {
@@ -40,7 +44,10 @@ export const products: Product[] = [
     slug: 'lavadora-carga-frontal-8kg',
     description: 'Lavadora de carga frontal con capacidad de 8kg, múltiples programas de lavado y motor inverter silencioso.',
     price: 1899.00,
-    imageUrl: 'https://images.unsplash.com/photo-1668417863230-64f268d1d252?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8d2FzaGluZyUyMG1hY2hpbmV8ZW58MHx8fHwxNzY3ODk4Njc3fDA&ixlib=rb-4.1.0&q=80&w=1080',
+    imageUrls: [
+      'https://images.unsplash.com/photo-1668417863230-64f268d1d252?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8d2FzaGluZyUyMG1hY2hpbmV8ZW58MHx8fHwxNzY3ODk4Njc3fDA&ixlib=rb-4.1.0&q=80&w=1080',
+      'https://picsum.photos/seed/washing2/800/800',
+    ],
     imageHint: 'washing machine',
     category: 'large',
     specifications: {
@@ -68,7 +75,9 @@ export const products: Product[] = [
     slug: 'horno-microondas-grill-25l',
     description: 'Horno microondas de diseño elegante en color negro, con función grill y 25 litros de capacidad.',
     price: 599.50,
-    imageUrl: 'https://images.unsplash.com/photo-1626143508000-4b5904e5e84a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxtaWNyb3dhdmUlMjBvdmVufGVufDB8fHx8MTc2Nzg1NDE3NXww&ixlib=rb-4.1.0&q=80&w=1080',
+    imageUrls: [
+      'https://images.unsplash.com/photo-1626143508000-4b5904e5e84a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxtaWNyb3dhdmUlMjBvdmVufGVufDB8fHx8MTc2Nzg1NDE3NXww&ixlib=rb-4.1.0&q=80&w=1080',
+    ],
     imageHint: 'microwave oven',
     category: 'small',
     specifications: {
@@ -96,7 +105,12 @@ export const products: Product[] = [
     price: 3200.00,
     originalPrice: 3500.00,
     hasFreeShipping: true,
-    imageUrl: 'https://images.unsplash.com/flagged/photo-1572609239482-d3a83f976aa0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxzbWFydCUyMHR2fGVufDB8fHx8MTc2Nzg5ODY3N3ww&ixlib=rb-4.1.0&q=80&w=1080',
+    imageUrls: [
+      'https://images.unsplash.com/flagged/photo-1572609239482-d3a83f976aa0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxzbWFydCUyMHR2fGVufDB8fHx8MTc2Nzg5ODY3N3ww&ixlib=rb-4.1.0&q=80&w=1080',
+      'https://picsum.photos/seed/tv2/800/800',
+      'https://picsum.photos/seed/tv3/800/800',
+      'https://picsum.photos/seed/tv4/800/800',
+    ],
     imageHint: 'smart tv',
     category: 'large',
     specifications: {
@@ -124,7 +138,9 @@ export const products: Product[] = [
     slug: 'cafetera-goteo-programable',
     description: 'Prepara el café perfecto cada mañana. Cafetera de goteo programable con jarra de vidrio y filtro permanente.',
     price: 250.00,
-    imageUrl: 'https://images.unsplash.com/photo-1515442261605-65987783cb6a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Y29mZmVlJTIwbWFrZXJ8ZW58MHx8fHwxNzY3ODcxNzIxfDA&ixlib=rb-4.1.0&q=80&w=1080',
+    imageUrls: [
+      'https://images.unsplash.com/photo-1515442261605-65987783cb6a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Y29mZmVlJTIwbWFrZXJ8ZW58MHx8fHwxNzY3ODcxNzIxfDA&ixlib=rb-4.1.0&q=80&w=1080',
+    ],
     imageHint: 'coffee maker',
     category: 'small',
     specifications: {
@@ -145,7 +161,9 @@ export const products: Product[] = [
     slug: 'licuadora-alta-potencia',
     description: 'Licuadora de alta velocidad ideal para smoothies, sopas y más. Con vaso de tritan resistente y cuchillas de acero.',
     price: 450.00,
-    imageUrl: 'https://images.unsplash.com/photo-1564940735784-b15466e8dc09?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxraXRjaGVuJTIwYmxlbmRlcnxlbnwwfHx8fDE3Njc3OTUyMjB8MA&ixlib=rb-4.1.0&q=80&w=1080',
+    imageUrls: [
+      'https://images.unsplash.com/photo-1564940735784-b15466e8dc09?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxraXRjaGVuJTIwYmxlbmRlcnxlbnwwfHx8fDE3Njc3OTUyMjB8MA&ixlib=rb-4.1.0&q=80&w=1080',
+    ],
     imageHint: 'kitchen blender',
     category: 'small',
     specifications: {

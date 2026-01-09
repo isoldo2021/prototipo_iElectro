@@ -1,3 +1,4 @@
+
 "use client";
 
 import Image from "next/image";
@@ -62,7 +63,7 @@ export function CartView() {
                     <TableCell className="hidden md:table-cell">
                       <div className="aspect-square w-20 bg-white flex items-center justify-center p-1 rounded-md">
                         <Image
-                          src={product.imageUrl}
+                          src={product.imageUrls[0]}
                           alt={product.name}
                           width={60}
                           height={60}

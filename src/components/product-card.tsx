@@ -54,7 +54,7 @@ export function ProductCard({ product }: ProductCardProps) {
         <Link href={`/products/${product.slug}`} className="block">
            <div className="aspect-square w-full bg-white flex items-center justify-center p-4">
               <Image
-                src={product.imageUrl}
+                src={product.imageUrls[0]}
                 alt={product.name}
                 width={150}
                 height={150}

@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useComparison } from "@/context/comparison-context";
@@ -51,7 +52,7 @@ export function CompareView() {
                                 {comparisonItems.map(item => (
                                     <TableHead key={item.id} className="w-1/4 text-center">
                                         <div className="flex flex-col items-center gap-2">
-                                            <Image src={item.imageUrl} alt={item.name} width={100} height={100} className="rounded-md object-cover" data-ai-hint={item.imageHint}/>
+                                            <Image src={item.imageUrls[0]} alt={item.name} width={100} height={100} className="rounded-md object-cover" data-ai-hint={item.imageHint}/>
                                             <span className="font-semibold text-foreground">{item.name}</span>
                                         </div>
                                     </TableHead>

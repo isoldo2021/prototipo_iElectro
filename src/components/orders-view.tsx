@@ -128,7 +128,7 @@ export function OrdersView() {
                 <div className="space-y-4">
                     {order.items.map(item => (
                         <div key={item.product.id} className="flex gap-4">
-                            <Image src={item.product.imageUrl} alt={item.product.name} width={64} height={64} className="rounded-md object-cover"/>
+                            <Image src={item.product.imageUrls[0]} alt={item.product.name} width={64} height={64} className="rounded-md object-cover"/>
                             <div className="flex-1">
                                 <p className="font-semibold">{item.product.name}</p>
                                 <p className="text-sm text-muted-foreground">Cantidad: {item.quantity}</p>

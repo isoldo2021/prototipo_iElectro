@@ -66,7 +66,7 @@ export function StockAvailabilityView() {
                         <div className='flex flex-col md:flex-row'>
                              <div className="p-4 md:w-1/3 flex flex-col items-center justify-center bg-muted/50">
                                 <Image 
-                                    src={selectedProduct.imageUrl} 
+                                    src={selectedProduct.imageUrls[0]} 
                                     alt={selectedProduct.name} 
                                     width={150} 
                                     height={150} 

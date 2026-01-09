@@ -60,14 +60,16 @@ export function CartView() {
                 {cartItems.map(({ product, quantity, warranty, installation }) => (
                   <TableRow key={product.id}>
                     <TableCell className="hidden md:table-cell">
-                      <Image
-                        src={product.imageUrl}
-                        alt={product.name}
-                        width={80}
-                        height={80}
-                        className="rounded-md object-cover"
-                        data-ai-hint={product.imageHint}
-                      />
+                      <div className="aspect-square w-20 bg-white flex items-center justify-center p-1 rounded-md">
+                        <Image
+                          src={product.imageUrl}
+                          alt={product.name}
+                          width={60}
+                          height={60}
+                          className="h-auto w-auto object-contain"
+                          data-ai-hint={product.imageHint}
+                        />
+                      </div>
                     </TableCell>
                     <TableCell>
                       <p className="font-medium">{product.name}</p>

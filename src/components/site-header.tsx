@@ -69,14 +69,16 @@ export function SiteHeader() {
                 <UserAuth />
              </div>
              <div className="h-8 border-l mx-2 hidden md:block"></div>
-             <Button variant="outline" className="relative rounded-full h-12 w-24 flex items-center gap-2">
-                <ShoppingCart className="h-6 w-6" />
-                <span className="font-semibold">Carrito</span>
-                 {itemCount > 0 && (
-                    <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
-                        {itemCount}
-                    </span>
-                 )}
+             <Button variant="outline" asChild className="relative rounded-full h-12 w-24 flex items-center gap-2">
+                <Link href="/cart">
+                  <ShoppingCart className="h-6 w-6" />
+                  <span className="font-semibold">Carrito</span>
+                  {itemCount > 0 && (
+                      <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
+                          {itemCount}
+                      </span>
+                  )}
+                </Link>
             </Button>
         </div>
       </div>

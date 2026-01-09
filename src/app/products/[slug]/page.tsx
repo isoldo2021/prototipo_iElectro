@@ -62,14 +62,16 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
     <div className="container mx-auto py-12">
       <div className="grid md:grid-cols-2 gap-12 items-start">
         <div className="rounded-lg overflow-hidden border">
-          <Image
-            src={product.imageUrl}
-            alt={product.name}
-            width={800}
-            height={800}
-            className="w-full h-full object-cover"
-            data-ai-hint={product.imageHint}
-          />
+          <div className="aspect-square w-full bg-white flex items-center justify-center p-4">
+            <Image
+              src={product.imageUrl}
+              alt={product.name}
+              width={400}
+              height={400}
+              className="w-auto h-auto object-contain max-h-full max-w-full"
+              data-ai-hint={product.imageHint}
+            />
+          </div>
         </div>
         <div>
           <h1 className="text-3xl md:text-4xl font-bold font-headline mb-2">

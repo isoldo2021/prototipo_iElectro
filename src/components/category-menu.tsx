@@ -2,7 +2,7 @@
 
 import { ScrollArea } from "./ui/scroll-area"
 import Link from "next/link"
-import { Package, Truck, ScanSearch, PackageSearch, Users, ShoppingBasket, MapPin } from "lucide-react"
+import { Package, Truck, ScanSearch, PackageSearch, Users, ShoppingBasket, MapPin, FileText } from "lucide-react"
 import { Button } from "./ui/button"
 import { ProductFilters } from "./product-filters"
 import { Separator } from "./ui/separator"
@@ -25,6 +25,12 @@ export function CategoryMenu() {
                     <Link href="/clients" className="flex items-center gap-2">
                         <Users className="h-5 w-5" />
                         <span>Clientes</span>
+                    </Link>
+                </Button>
+                <Button variant="ghost" asChild className="p-0 h-auto justify-start text-base w-full">
+                    <Link href="/sales-report" className="flex items-center gap-2">
+                        <FileText className="h-5 w-5" />
+                        <span>Reporte de Ventas</span>
                     </Link>
                 </Button>
                 <Button variant="ghost" asChild className="p-0 h-auto justify-start text-base w-full">

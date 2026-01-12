@@ -2,11 +2,9 @@
 
 import { createContext, useContext, useState, ReactNode, useMemo } from "react";
 import type { Product } from "@/types";
-import { products as allProducts } from "@/lib/products";
 
 interface ComparisonContextType {
   comparisonIds: string[];
-  comparisonItems: Product[];
   toggleFromComparison: (productId: string) => void;
   isInComparison: (productId: string) => boolean;
   clearComparison: () => void;
@@ -22,9 +20,7 @@ export const ComparisonProvider = ({ children }: { children: ReactNode }) => {
       if (prevIds.includes(productId)) {
         return prevIds.filter((id) => id !== productId);
       }
-      // Limit to 4 items for comparison
       if (prevIds.length >= 4) {
-        // Here you might want to show a toast notification
         console.warn("Comparison limit reached.");
         return prevIds;
       }
@@ -40,13 +36,8 @@ export const ComparisonProvider = ({ children }: { children: ReactNode }) => {
     setComparisonIds([]);
   }
 
-  const comparisonItems = useMemo(() => {
-    return allProducts.filter((product) => comparisonIds.includes(product.id));
-  }, [comparisonIds]);
-
   const value = {
     comparisonIds,
-    comparisonItems,
     toggleFromComparison,
     isInComparison,
     clearComparison,

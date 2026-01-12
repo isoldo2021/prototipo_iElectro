@@ -11,11 +11,18 @@ import { useCart } from "@/context/cart-context";
 import { useToast } from "@/hooks/use-toast";
 import { ShoppingCart } from "lucide-react";
 import type { Product } from "@/types";
+import { useProductsByIds } from "@/hooks/use-products";
+
 
 export function CompareView() {
-    const { comparisonItems } = useComparison();
+    const { comparisonIds } = useComparison();
+    const { items: comparisonItems, isLoading } = useProductsByIds(comparisonIds);
     const { addToCart } = useCart();
     const { toast } = useToast();
+
+    if (isLoading) {
+        return <div>Cargando productos para comparar...</div>
+    }
 
     if (comparisonItems.length === 0) {
         return (

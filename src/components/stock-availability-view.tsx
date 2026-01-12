@@ -3,7 +3,6 @@
 
 import { useState, useMemo } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { products } from '@/lib/products';
 import type { Product } from '@/types';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import {
@@ -17,6 +16,9 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '.
 import { CheckCircle2, XCircle } from 'lucide-react';
 import Image from 'next/image';
 import { Badge } from './ui/badge';
+import { useFirestore, useCollection, useMemoFirebase } from '@/firebase';
+import { collection, query } from 'firebase/firestore';
+
 
 interface Store {
   id: string;
@@ -24,7 +26,6 @@ interface Store {
   address: string;
 }
 
-// Mock data for stores
 const stores: Store[] = [
     { id: "store-1", name: "Carrefour Express", address: "Amenabar 1187, Belgrano, CABA" },
     { id: "store-2", name: "Carrefour Market", address: "Av. Corrientes 3450, Almagro, CABA" },
@@ -33,12 +34,20 @@ const stores: Store[] = [
 
 export function StockAvailabilityView() {
     const searchParams = useSearchParams();
+    const firestore = useFirestore();
     const initialProductId = searchParams.get('productId');
     const [selectedProductId, setSelectedProductId] = useState<string | undefined>(initialProductId || undefined);
+    
+    const productsQuery = useMemoFirebase(() => {
+        if (!firestore) return null;
+        return query(collection(firestore, "products"));
+    }, [firestore]);
+
+    const { data: products, isLoading: areProductsLoading } = useCollection<Product>(productsQuery);
 
     const selectedProduct = useMemo(() => {
-        return products.find(p => p.id === selectedProductId);
-    }, [selectedProductId]);
+        return products?.find(p => p.id === selectedProductId);
+    }, [selectedProductId, products]);
 
 
     return (
@@ -48,12 +57,12 @@ export function StockAvailabilityView() {
                 <p className="text-muted-foreground">Selecciona un producto para ver su disponibilidad en nuestras sucursales.</p>
             </CardHeader>
             <CardContent className="space-y-6">
-                <Select value={selectedProductId} onValueChange={setSelectedProductId}>
+                <Select value={selectedProductId} onValueChange={setSelectedProductId} disabled={areProductsLoading}>
                     <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Selecciona un producto..." />
+                        <SelectValue placeholder={areProductsLoading ? "Cargando productos..." : "Selecciona un producto..."} />
                     </SelectTrigger>
                     <SelectContent>
-                        {products.map(product => (
+                        {products?.map(product => (
                             <SelectItem key={product.id} value={product.id}>
                                 {product.name}
                             </SelectItem>

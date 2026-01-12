@@ -1,9 +1,9 @@
 
 "use client";
 
-import { notFound, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { ShoppingCart, ShieldCheck, Wrench, CheckCircle2, XCircle, Store } from "lucide-react";
+import { ShoppingCart, ShieldCheck, Wrench, CheckCircle2, XCircle, Store, Loader2 } from "lucide-react";
 import {
   Carousel,
   CarouselContent,
@@ -12,7 +12,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel"
 
-import { getProductBySlug, products } from "@/lib/products";
+import { useProductBySlug } from "@/lib/products";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -26,22 +26,46 @@ import { ProductGrid } from "@/components/product-grid";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
-import type { WarrantyOption } from "@/types";
+import type { WarrantyOption, Product } from "@/types";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
+import { useFirestore, useCollection, useMemoFirebase } from "@/firebase";
+import { collection, query, where } from "firebase/firestore";
 
 export default function ProductPage({ params }: { params: { slug: string } }) {
   const { addToCart } = useCart();
   const { toast } = useToast();
   const router = useRouter();
+  const firestore = useFirestore();
+  
   const [selectedWarranty, setSelectedWarranty] = useState<WarrantyOption | null>(null);
   const [installationSelected, setInstallationSelected] = useState(false);
 
+  const { product, isLoading: isProductLoading } = useProductBySlug(params.slug);
 
-  const product = getProductBySlug(params.slug);
+  const relatedProductsQuery = useMemoFirebase(() => {
+    if (!firestore || !product) return null;
+    return query(collection(firestore, "products"), where("category", "==", product.category), where("id", "!=", product.id));
+  }, [firestore, product]);
+
+  const { data: relatedProducts, isLoading: areRelatedLoading } = useCollection<Product>(relatedProductsQuery);
+
+  if (isProductLoading) {
+    return (
+        <div className="container mx-auto py-12 flex items-center justify-center">
+            <Loader2 className="h-8 w-8 animate-spin" />
+            <span className="ml-4 text-lg">Cargando producto...</span>
+        </div>
+    );
+  }
 
   if (!product) {
-    notFound();
+    return (
+        <div className="container mx-auto py-12 text-center">
+            <h1 className="text-2xl font-bold">Producto no encontrado</h1>
+            <p className="text-muted-foreground">El producto que buscas no existe o ha sido eliminado.</p>
+        </div>
+    );
   }
 
   const handleAddToCart = () => {
@@ -63,8 +87,6 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
   const handleConsultStock = () => {
     router.push(`/stock-availability?productId=${product.id}`);
   }
-
-  const relatedProducts = products.filter(p => p.category === product.category && p.id !== product.id).slice(0, 3);
 
   return (
     <div className="container mx-auto py-12">
@@ -188,7 +210,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
         </Table>
       </div>
 
-      {relatedProducts.length > 0 && (
+      {relatedProducts && relatedProducts.length > 0 && (
         <div className="mt-20">
             <h2 className="text-2xl font-bold font-headline mb-6">Productos Relacionados</h2>
             <ProductGrid products={relatedProducts} />

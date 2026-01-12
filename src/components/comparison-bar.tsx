@@ -7,11 +7,14 @@ import { Card, CardContent } from "./ui/card";
 import Image from "next/image";
 import Link from "next/link";
 import { X, Layers } from "lucide-react";
+import { useProductsByIds } from "@/hooks/use-products";
+
 
 export function ComparisonBar() {
-  const { comparisonItems, toggleFromComparison, clearComparison } = useComparison();
+  const { comparisonIds, toggleFromComparison, clearComparison } = useComparison();
+  const { items: comparisonItems, isLoading } = useProductsByIds(comparisonIds);
 
-  if (comparisonItems.length === 0) {
+  if (isLoading || comparisonItems.length === 0) {
     return null;
   }
 

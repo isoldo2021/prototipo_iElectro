@@ -51,19 +51,11 @@ export function SiteHeader() {
         </div>
 
         <div className="flex items-center gap-1">
-            <Button variant="ghost" className="hidden md:flex flex-col items-center h-auto px-2 py-1">
-                <Clock className="h-6 w-6"/>
-                <span className="text-xs">Entrega inmediata</span>
-            </Button>
             <Button variant="ghost" asChild className="hidden md:flex flex-col items-center h-auto px-2 py-1">
                 <Link href="/offers">
                     <Tag className="h-6 w-6"/>
                     <span className="text-xs">Ofertas</span>
                 </Link>
-            </Button>
-            <Button variant="ghost" className="hidden md:flex flex-col items-center h-auto px-2 py-1">
-                <Heart className="h-6 w-6"/>
-                <span className="text-xs">Favoritos</span>
             </Button>
              <div className="hidden md:block">
                 <UserAuth />

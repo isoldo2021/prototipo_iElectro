@@ -2,7 +2,7 @@
 
 import { ScrollArea } from "./ui/scroll-area"
 import Link from "next/link"
-import { Package, Truck, ScanSearch, PackageSearch, Users, ShoppingBasket } from "lucide-react"
+import { Package, Truck, ScanSearch, PackageSearch, Users, ShoppingBasket, MapPin } from "lucide-react"
 import { Button } from "./ui/button"
 import { ProductFilters } from "./product-filters"
 import { Separator } from "./ui/separator"
@@ -49,6 +49,12 @@ export function CategoryMenu() {
                     <Link href="/delivery-availability" className="flex items-center gap-2">
                         <Truck className="h-5 w-5" />
                         <span>Disponibilidad de entrega</span>
+                    </Link>
+                </Button>
+                <Button variant="ghost" asChild className="p-0 h-auto justify-start text-base w-full">
+                    <Link href="/address-check" className="flex items-center gap-2">
+                        <MapPin className="h-5 w-5" />
+                        <span>Consulta de Domicilio</span>
                     </Link>
                 </Button>
             </div>

@@ -2,7 +2,7 @@
 
 import { ScrollArea } from "./ui/scroll-area"
 import Link from "next/link"
-import { Package, Truck, ScanSearch, PackageSearch } from "lucide-react"
+import { Package, Truck, ScanSearch, PackageSearch, Users } from "lucide-react"
 import { Button } from "./ui/button"
 import { ProductFilters } from "./product-filters"
 import { Separator } from "./ui/separator"
@@ -15,6 +15,12 @@ export function CategoryMenu() {
             </ScrollArea>
              <div className="p-4 border-t mt-auto space-y-2">
                  <Separator className="mb-4" />
+                <Button variant="ghost" asChild className="p-0 h-auto justify-start text-base w-full">
+                    <Link href="/clients" className="flex items-center gap-2">
+                        <Users className="h-5 w-5" />
+                        <span>Clientes</span>
+                    </Link>
+                </Button>
                 <Button variant="ghost" asChild className="p-0 h-auto justify-start text-base w-full">
                     <Link href="/scan-price" className="flex items-center gap-2">
                         <ScanSearch className="h-5 w-5" />

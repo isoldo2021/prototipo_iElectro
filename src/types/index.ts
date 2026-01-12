@@ -53,3 +53,10 @@ export type Order = {
     store?: string;
     paymentMethod: string;
 };
+
+export interface UserProfile {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+}

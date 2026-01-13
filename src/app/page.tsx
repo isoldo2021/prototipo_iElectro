@@ -2,25 +2,19 @@
 "use client";
 
 import { ProductCatalog } from '@/components/product-catalog';
-import { useCollection, useFirestore, useMemoFirebase } from '@/firebase';
-import { collection, query } from 'firebase/firestore';
+import { products } from '@/lib/products';
 import type { Product } from '@/types';
 
 export default function Home() {
-  const firestore = useFirestore();
-  
-  const productsQuery = useMemoFirebase(() => {
-    if (!firestore) return null;
-    return query(collection(firestore, 'products'));
-  }, [firestore]);
-
-  const { data: products, isLoading } = useCollection<Product>(productsQuery);
+  // For demonstration purposes, we are using the local product list.
+  // In a real application, you would fetch this from Firestore like before.
+  const allProducts: Product[] = products;
 
   return (
     <div className="container mx-auto px-4 py-8">
       <section className="mt-8">
-        {isLoading && <div>Cargando productos...</div>}
-        {products && <ProductCatalog allProducts={products} />}
+        {!allProducts && <div>Cargando productos...</div>}
+        {allProducts && <ProductCatalog allProducts={allProducts} />}
       </section>
     </div>
   );

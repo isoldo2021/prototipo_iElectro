@@ -1,3 +1,4 @@
+
 "use client"
 
 import { ScrollArea } from "./ui/scroll-area"
@@ -28,24 +29,18 @@ export function CategoryMenu() {
                     </Link>
                 </Button>
                 <Button variant="ghost" asChild className="p-0 h-auto justify-start text-base w-full">
-                    <Link href="/sales-report" className="flex items-center gap-2">
-                        <FileText className="h-5 w-5" />
-                        <span>Reporte de Ventas</span>
+                    <Link href="/address-check" className="flex items-center gap-2">
+                        <MapPin className="h-5 w-5" />
+                        <span>Consulta de Domicilio</span>
                     </Link>
                 </Button>
-                <Button variant="ghost" asChild className="p-0 h-auto justify-start text-base w-full">
-                    <Link href="/scan-price" className="flex items-center gap-2">
-                        <ScanSearch className="h-5 w-5" />
-                        <span>Escaneá un precio</span>
-                    </Link>
-                </Button>
-                <Button variant="ghost" asChild className="p-0 h-auto justify-start text-base w-full">
+                 <Button variant="ghost" asChild className="p-0 h-auto justify-start text-base w-full">
                     <Link href="/orders" className="flex items-center gap-2">
                         <Package className="h-5 w-5" />
                         <span>Consulta de Pedidos</span>
                     </Link>
                 </Button>
-                 <Button variant="ghost" asChild className="p-0 h-auto justify-start text-base w-full">
+                <Button variant="ghost" asChild className="p-0 h-auto justify-start text-base w-full">
                     <Link href="/stock-availability" className="flex items-center gap-2">
                         <PackageSearch className="h-5 w-5" />
                         <span>Consulta de Stock</span>
@@ -58,9 +53,15 @@ export function CategoryMenu() {
                     </Link>
                 </Button>
                 <Button variant="ghost" asChild className="p-0 h-auto justify-start text-base w-full">
-                    <Link href="/address-check" className="flex items-center gap-2">
-                        <MapPin className="h-5 w-5" />
-                        <span>Consulta de Domicilio</span>
+                    <Link href="/scan-price" className="flex items-center gap-2">
+                        <ScanSearch className="h-5 w-5" />
+                        <span>Escaneá un precio</span>
+                    </Link>
+                </Button>
+                <Button variant="ghost" asChild className="p-0 h-auto justify-start text-base w-full">
+                    <Link href="/sales-report" className="flex items-center gap-2">
+                        <FileText className="h-5 w-5" />
+                        <span>Reporte de Ventas</span>
                     </Link>
                 </Button>
             </div>

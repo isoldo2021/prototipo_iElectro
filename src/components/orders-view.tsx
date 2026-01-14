@@ -1,9 +1,8 @@
 
 "use client";
 
-import { useState } from "react";
-import { useUser, useCollection, useMemoFirebase } from "@/firebase";
-import { collection, query, where, orderBy } from "firebase/firestore";
+import { useState, useMemo } from "react";
+import { useUser } from "@/firebase";
 import type { Order } from "@/types";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Input } from "./ui/input";
@@ -17,35 +16,67 @@ import {
 import { Badge } from "./ui/badge";
 import { format } from "date-fns";
 import Image from "next/image";
-import { useFirestore } from "@/firebase/provider";
+import { products } from "@/lib/products";
+
+const mockOrders: Order[] = [
+    {
+        id: "order-1",
+        userId: "mock-user-1",
+        items: [
+            { product: products[0], quantity: 1, warranty: products[0].warrantyOptions[0], installation: true },
+            { product: products[2], quantity: 1, warranty: null, installation: false },
+        ],
+        orderDate: new Date(2024, 6, 15).toISOString(),
+        status: 'Entregado',
+        shipping: { id: 'home', label: 'Envío a Domicilio', price: 25, description: 'Entrega en 2-4 días' },
+        total: 874998,
+        dni: "12345678",
+        paymentMethod: "Tarjeta de Crédito"
+    },
+    {
+        id: "order-2",
+        userId: "mock-user-1",
+        items: [
+            { product: products[3], quantity: 2, warranty: null, installation: false },
+        ],
+        orderDate: new Date(2024, 7, 1).toISOString(),
+        status: 'Procesando',
+        shipping: { id: 'store', label: 'Recojo en Tienda', price: 0, description: 'Disponible en Carrefour San Miguel' },
+        total: 599998,
+        dni: "87654321",
+        store: "Carrefour San Miguel",
+        paymentMethod: "Mercado Pago"
+    }
+];
+
 
 export function OrdersView() {
   const { user, isUserLoading } = useUser();
-  const firestore = useFirestore();
   const [searchTerm, setSearchTerm] = useState("");
   const [filterType, setFilterType] = useState<"dni" | "date" | "store">("dni");
+  
+  const orders = mockOrders;
+  const isLoading = false;
 
-  const ordersQuery = useMemoFirebase(() => {
-    if (!user) return null;
-    
-    let q = query(collection(firestore, `users/${user.uid}/orders`), orderBy('orderDate', 'desc'));
-
-    if (searchTerm) {
-        if (filterType === 'dni') {
-            q = query(q, where('dni', '==', searchTerm));
+  const filteredOrders = useMemo(() => {
+    if (!searchTerm) return orders;
+    return orders.filter(order => {
+         if (filterType === 'dni') {
+            return order.dni?.includes(searchTerm);
         } else if (filterType === 'store') {
-            q = query(q, where('store', '==', searchTerm));
+            return order.store?.toLowerCase().includes(searchTerm.toLowerCase());
         } else if (filterType === 'date') {
-            // This is a simplification. A real date search would need a date picker and range logic.
-            // For now, we search for a partial match in the date string.
-             q = query(q, where('orderDate', '>=', searchTerm));
+            try {
+                const searchDate = format(new Date(searchTerm), 'yyyy-MM-dd');
+                const orderDate = format(new Date(order.orderDate), 'yyyy-MM-dd');
+                return orderDate === searchDate;
+            } catch {
+                return false;
+            }
         }
-    }
-
-    return q;
-  }, [user, firestore, searchTerm, filterType]);
-
-  const { data: orders, isLoading } = useCollection<Order>(ordersQuery);
+        return false;
+    });
+  }, [orders, searchTerm, filterType]);
 
   const getStatusVariant = (status: Order['status']) => {
     switch (status) {
@@ -106,9 +137,9 @@ export function OrdersView() {
         </CardContent>
       </Card>
 
-      {orders && orders.length > 0 ? (
+      {filteredOrders && filteredOrders.length > 0 ? (
         <Accordion type="multiple" className="space-y-4">
-          {orders.map((order) => (
+          {filteredOrders.map((order) => (
             <AccordionItem value={order.id} key={order.id} className="bg-card border rounded-lg">
               <AccordionTrigger className="p-4 hover:no-underline">
                 <div className="flex flex-col md:flex-row md:items-center justify-between w-full text-left">

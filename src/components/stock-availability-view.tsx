@@ -16,9 +16,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '.
 import { CheckCircle2, XCircle } from 'lucide-react';
 import Image from 'next/image';
 import { Badge } from './ui/badge';
-import { useFirestore, useCollection, useMemoFirebase } from '@/firebase';
-import { collection, query } from 'firebase/firestore';
-
+import { products as mockProducts } from '@/lib/products';
 
 interface Store {
   id: string;
@@ -34,16 +32,10 @@ const stores: Store[] = [
 
 export function StockAvailabilityView() {
     const searchParams = useSearchParams();
-    const firestore = useFirestore();
     const initialProductId = searchParams.get('productId');
     const [selectedProductId, setSelectedProductId] = useState<string | undefined>(initialProductId || undefined);
     
-    const productsQuery = useMemoFirebase(() => {
-        if (!firestore) return null;
-        return query(collection(firestore, "products"));
-    }, [firestore]);
-
-    const { data: products, isLoading: areProductsLoading } = useCollection<Product>(productsQuery);
+    const products = mockProducts;
 
     const selectedProduct = useMemo(() => {
         return products?.find(p => p.id === selectedProductId);
@@ -57,9 +49,9 @@ export function StockAvailabilityView() {
                 <p className="text-muted-foreground">Selecciona un producto para ver su disponibilidad en nuestras sucursales.</p>
             </CardHeader>
             <CardContent className="space-y-6">
-                <Select value={selectedProductId} onValueChange={setSelectedProductId} disabled={areProductsLoading}>
+                <Select value={selectedProductId} onValueChange={setSelectedProductId}>
                     <SelectTrigger className="w-full">
-                        <SelectValue placeholder={areProductsLoading ? "Cargando productos..." : "Selecciona un producto..."} />
+                        <SelectValue placeholder={"Selecciona un producto..."} />
                     </SelectTrigger>
                     <SelectContent>
                         {products?.map(product => (

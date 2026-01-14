@@ -1,8 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useFirestore, useCollection, useMemoFirebase, useUser } from "@/firebase";
-import { collection, doc, deleteDoc } from "firebase/firestore";
 import type { Product } from "@/types";
 import { Button } from "./ui/button";
 import {
@@ -28,19 +26,16 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { ProductForm } from "./product-form";
+import { products as mockProducts } from "@/lib/products";
+import { useUser } from "@/firebase";
+import { useToast } from "@/hooks/use-toast";
 
 export function ProductsAdminView() {
-  const firestore = useFirestore();
   const { user } = useUser();
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-
-  const productsQuery = useMemoFirebase(() => {
-    if (!firestore) return null;
-    return collection(firestore, "products");
-  }, [firestore]);
-
-  const { data: products, isLoading } = useCollection<Product>(productsQuery);
+  const [products, setProducts] = useState<Product[]>(mockProducts);
+  const { toast } = useToast();
 
   const handleAddNew = () => {
     setSelectedProduct(null);
@@ -53,14 +48,13 @@ export function ProductsAdminView() {
   };
 
   const handleDelete = async (productId: string) => {
-    if (!firestore) return;
-    const productDocRef = doc(firestore, "products", productId);
-    await deleteDoc(productDocRef);
+    // This is a mock delete for demonstration
+    setProducts(prev => prev.filter(p => p.id !== productId));
+    toast({
+      title: "Artículo Eliminado (Demo)",
+      description: "El artículo ha sido eliminado de la vista de demostración.",
+    });
   };
-  
-  if (isLoading) {
-      return <div>Cargando artículos...</div>
-  }
   
   if (!user) {
     return (
@@ -129,7 +123,7 @@ export function ProductsAdminView() {
                         <AlertDialogHeader>
                           <AlertDialogTitle>¿Estás seguro?</AlertDialogTitle>
                           <AlertDialogDescription>
-                            Esta acción no se puede deshacer. Esto eliminará permanentemente el artículo de la base de datos.
+                            Esta acción no se puede deshacer. Esto eliminará permanentemente el artículo (en esta demo).
                           </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>

@@ -1,8 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useFirestore, useCollection, useMemoFirebase, useUser } from "@/firebase";
-import { collection, doc, deleteDoc } from "firebase/firestore";
+import { useUser } from "@/firebase";
 import type { UserProfile } from "@/types";
 import { Button } from "./ui/button";
 import {
@@ -26,20 +25,21 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
+} from "@/components/ui/alert-dialog";
+import { useToast } from "@/hooks/use-toast";
+
+const mockClients: UserProfile[] = [
+    { id: "user-1", firstName: "Juan", lastName: "Pérez", email: "juan.perez@example.com" },
+    { id: "user-2", firstName: "María", lastName: "García", email: "maria.garcia@example.com" },
+    { id: "user-3", firstName: "Carlos", lastName: "López", email: "carlos.lopez@example.com" },
+];
 
 export function ClientsView() {
-  const firestore = useFirestore();
   const { user } = useUser();
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [selectedClient, setSelectedClient] = useState<UserProfile | null>(null);
-
-  const clientsQuery = useMemoFirebase(() => {
-    if (!firestore) return null;
-    return collection(firestore, "users");
-  }, [firestore]);
-
-  const { data: clients, isLoading } = useCollection<UserProfile>(clientsQuery);
+  const [clients, setClients] = useState<UserProfile[]>(mockClients);
+  const { toast } = useToast();
 
   const handleAddNew = () => {
     setSelectedClient(null);
@@ -52,14 +52,12 @@ export function ClientsView() {
   };
 
   const handleDelete = async (clientId: string) => {
-    if (!firestore) return;
-    const clientDocRef = doc(firestore, "users", clientId);
-    await deleteDoc(clientDocRef);
+    setClients(prev => prev.filter(c => c.id !== clientId));
+    toast({
+        title: "Cliente Eliminado (Demo)",
+        description: "El cliente ha sido eliminado de la lista de demostración.",
+    });
   };
-  
-  if (isLoading) {
-      return <div>Cargando clientes...</div>
-  }
   
   if (!user) {
     return (
@@ -124,7 +122,7 @@ export function ClientsView() {
                         <AlertDialogHeader>
                           <AlertDialogTitle>¿Estás seguro?</AlertDialogTitle>
                           <AlertDialogDescription>
-                            Esta acción no se puede deshacer. Esto eliminará permanentemente al cliente de la base de datos.
+                            Esta acción no se puede deshacer. Esto eliminará permanentemente al cliente de la base de datos (en esta demo).
                           </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>

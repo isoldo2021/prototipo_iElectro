@@ -16,11 +16,9 @@ import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "./ui/card"
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { MapPin, Search } from "lucide-react";
-import { Alert, AlertTitle, AlertDescription } from "./ui/alert";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { useFirestore, useCollection, useMemoFirebase } from "@/firebase";
-import { collection, query } from "firebase/firestore";
+import { products as mockProducts } from "@/lib/products";
 
 type Step = "store-selection" | "scanning" | "result" | "not-found";
 
@@ -44,14 +42,6 @@ export function PriceScannerView() {
   const [scanner, setScanner] = useState<Html5QrcodeScanner | null>(null);
   const { toast } = useToast();
   const router = useRouter();
-  const firestore = useFirestore();
-
-  const productsQuery = useMemoFirebase(() => {
-    if (!firestore) return null;
-    return query(collection(firestore, "products"));
-  }, [firestore]);
-
-  const { data: products } = useCollection<Product>(productsQuery);
 
   const handleStoreSelect = (store: Store) => {
     setSelectedStore(store);
@@ -59,6 +49,7 @@ export function PriceScannerView() {
   };
 
   const onScanSuccess = (decodedText: string) => {
+    const products = mockProducts;
     if (!products) return;
     const product = products.find(p => p.id === decodedText);
     setScannedEan(decodedText);

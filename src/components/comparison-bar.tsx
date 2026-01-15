@@ -7,14 +7,18 @@ import { Card, CardContent } from "./ui/card";
 import Image from "next/image";
 import Link from "next/link";
 import { X, Layers } from "lucide-react";
-import { useProductsByIds } from "@/hooks/use-products";
+import { products as allProducts } from "@/lib/products";
+import { useMemo } from "react";
 
 
 export function ComparisonBar() {
   const { comparisonIds, toggleFromComparison, clearComparison } = useComparison();
-  const { items: comparisonItems, isLoading } = useProductsByIds(comparisonIds);
+  
+  const comparisonItems = useMemo(() => {
+    return allProducts.filter(p => comparisonIds.includes(p.id));
+  }, [comparisonIds]);
 
-  if (isLoading || comparisonItems.length === 0) {
+  if (comparisonItems.length === 0) {
     return null;
   }
 

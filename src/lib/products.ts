@@ -13,9 +13,9 @@ export const products: Product[] = [
     "hasFreeShipping": true,
     "carrefourCredit": "10% de descuento con Tarjeta Carrefour",
     "imageUrls": [
-      "https://picsum.photos/seed/heladera1/600/600",
-      "https://picsum.photos/seed/heladera2/600/600",
-      "https://picsum.photos/seed/heladera3/600/600"
+      "https://images.unsplash.com/photo-1643356472833-5b1f2cd4ca3c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxyZWZyaWdlcmF0b3IlMjBraXRjaGVufGVufDB8fHx8MTc2NzgxMDU4MHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "https://images.unsplash.com/photo-1571175443880-49e1d25b2bc5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxyZWZyaWdlcmF0b3J8ZW58MHx8fHwxNzY4ODI2ODgwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "https://images.unsplash.com/photo-1626802339597-eef4d4335c09?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxyZWZyaWdlcmF0b3J8ZW58MHx8fHwxNzY4ODI2ODgwfDA&ixlib=rb-4.1.0&q=80&w=1080"
     ],
     "imageHint": "heladera moderna",
     "category": "large",
@@ -44,8 +44,8 @@ export const products: Product[] = [
     "installments": 6,
     "hasFreeShipping": true,
     "imageUrls": [
-      "https://picsum.photos/seed/lavarropas1/600/600",
-      "https://picsum.photos/seed/lavarropas2/600/600"
+      "https://images.unsplash.com/photo-1668417863230-64f268d1d252?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8d2FzaGluZyUyMG1hY2hpbmV8ZW58MHx8fHwxNzY3ODk4Njc3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "https://images.unsplash.com/photo-1582735689369-3894db549902?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHx3YXNoaW5nJTIwbWFjaGluZXxlbnwwfHx8fDE3NjgwODQwMzl8MA&ixlib=rb-4.1.0&q=80&w=1080"
     ],
     "imageHint": "lavarropas blanco",
     "category": "large",
@@ -72,8 +72,8 @@ export const products: Product[] = [
     "hasFreeShipping": false,
     "carrefourCredit": "15% de descuento con Tarjeta Carrefour",
     "imageUrls": [
-      "https://picsum.photos/seed/tv1/600/600",
-      "https://picsum.photos/seed/tv2/600/600"
+      "https://images.unsplash.com/flagged/photo-1572609239482-d3a83f976aa0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxzbWFydCUyMHR2fGVufDB8fHx8MTc2Nzg5ODY3N3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "https://images.unsplash.com/photo-1593784917030-41b4e82a8342?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxzbWFydCUyMHR2fGVufDB8fHx8MTc2Nzg5ODY3N3ww&ixlib=rb-4.1.0&q=80&w=1080"
     ],
     "imageHint": "smart tv",
     "category": "large",
@@ -100,8 +100,7 @@ export const products: Product[] = [
     "installments": 12,
     "hasFreeShipping": true,
     "imageUrls": [
-      "https://picsum.photos/seed/celular1/600/600",
-      "https://picsum.photos/seed/celular2/600/600"
+      "https://images.unsplash.com/photo-1678846395116-f6c888494c2a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxzYW1zdW5nJTIwZ2FsYXh5JTIwYTU0fGVufDB8fHx8MTc2ODgyNzAwOXww&ixlib=rb-4.1.0&q=80&w=1080"
     ],
     "imageHint": "smartphone",
     "category": "small",
@@ -125,7 +124,7 @@ export const products: Product[] = [
     "price": 189999,
     "hasFreeShipping": false,
     "imageUrls": [
-      "https://picsum.photos/seed/cocina1/600/600"
+      "https://images.unsplash.com/photo-1601617488316-2c1de3b11d9f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxnYXMlMjBzdG92ZXxlbnwwfHx8fDE3NjgyNzE4MDF8MA&ixlib=rb-4.1.0&q=80&w=1080"
     ],
     "imageHint": "cocina gas",
     "category": "large",
@@ -151,7 +150,7 @@ export const products: Product[] = [
     "installments": 18,
     "hasFreeShipping": true,
     "imageUrls": [
-      "https://picsum.photos/seed/aire1/600/600"
+      "https://images.unsplash.com/photo-1633519899736-40f4e30018b1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxhirJTIwY29uZGl0aW9uZXJ8ZW58MHx8fHwxNzY4ODI3MDY2fDA&ixlib=rb-4.1.0&q=80&w=1080"
     ],
     "imageHint": "aire acondicionado",
     "category": "large",
@@ -179,7 +178,7 @@ export const products: Product[] = [
     "originalPrice": 399990,
     "hasFreeShipping": true,
     "installments": 6,
-    "imageUrls": ["https://picsum.photos/seed/audio1/600/600"],
+    "imageUrls": ["https://images.unsplash.com/photo-1673102392433-a3d4f93a958c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxzb255JTIwd2gxMDAweG01fGVufDB8fHx8MTc2ODgyNzExN3ww&ixlib=rb-4.1.0&q=80&w=1080"],
     "imageHint": "auriculares inalámbricos",
     "category": "small",
     "specifications": {
@@ -200,7 +199,7 @@ export const products: Product[] = [
     "price": 479999,
     "hasFreeShipping": true,
     "installments": 12,
-    "imageUrls": ["https://picsum.photos/seed/notebook1/600/600"],
+    "imageUrls": ["https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxsZW5vdm8lMjBsYXB0b3B8ZW58MHx8fHwxNzY4ODI3MTUwfDA&ixlib=rb-4.1.0&q=80&w=1080"],
     "imageHint": "notebook lenovo",
     "category": "small",
     "specifications": {
@@ -221,7 +220,7 @@ export const products: Product[] = [
     "price": 149999,
     "originalPrice": 169999,
     "hasFreeShipping": false,
-    "imageUrls": ["https://picsum.photos/seed/cafetera1/600/600"],
+    "imageUrls": ["https://images.unsplash.com/photo-1515442261605-65987783cb6a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Y29mZmVlJTIwbWFrZXJ8ZW58MHx8fHwxNzY3ODcxNzIxfDA&ixlib=rb-4.1.0&q=80&w=1080"],
     "imageHint": "cafetera pequeña",
     "category": "small",
     "specifications": {
@@ -241,7 +240,7 @@ export const products: Product[] = [
     "description": "Logra una afeitada suave y al ras con las cuchillas ComfortCut. Sus cabezales flexibles se adaptan a las curvas de tu rostro. Uso con cable para una potencia constante.",
     "price": 59999,
     "hasFreeShipping": false,
-    "imageUrls": ["https://picsum.photos/seed/afeitadora1/600/600"],
+    "imageUrls": ["https://images.unsplash.com/photo-1621202271884-6c35234313f2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxlbGVjdHJpYyUyMHNoYXZlcnxlbnwwfHx8fDE3NjgyNzE5OTV8MA&ixlib=rb-4.1.0&q=80&w=1080"],
     "imageHint": "afeitadora eléctrica",
     "category": "small",
     "specifications": {
@@ -261,7 +260,7 @@ export const products: Product[] = [
     "description": "Agua caliente sin interrupciones para toda tu familia. El termotanque Rheem de 80 litros cuenta con un sistema de alta recuperación y un quemador de acero inoxidable para mayor durabilidad y eficiencia.",
     "price": 249999,
     "hasFreeShipping": false,
-    "imageUrls": ["https://picsum.photos/seed/termotanque1/600/600"],
+    "imageUrls": ["https://images.unsplash.com/photo-1583853314942-1291b5a265c7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxiwoB0ZXIlMjBoZWF0ZXJ8ZW58MHx8fHwxNzY4ODI3MTgxfDA&ixlib=rb-4.1.0&q=80&w=1080"],
     "imageHint": "termotanque gas",
     "category": "large",
     "specifications": {
@@ -282,7 +281,7 @@ export const products: Product[] = [
     "description": "Optimiza tu espacio y encuentra el ángulo de visión perfecto con este soporte móvil. Compatible con TVs de 32 a 65 pulgadas, permite inclinación y giro para una experiencia visual inmejorable.",
     "price": 49999,
     "hasFreeShipping": false,
-    "imageUrls": ["https://picsum.photos/seed/soporte1/600/600"],
+    "imageUrls": ["https://images.unsplash.com/photo-1617294862839-a90d04c40049?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHx0diUyMG1vdW50fGVufDB8fHx8MTc2ODgyNzIxMnww&ixlib=rb-4.1.0&q=80&w=1080"],
     "imageHint": "soporte tv",
     "category": "small",
     "specifications": {
@@ -311,3 +310,5 @@ export const useProductBySlug = (slug: string) => {
         error: null,
     }
 }
+
+    

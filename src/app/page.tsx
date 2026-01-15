@@ -71,10 +71,8 @@ export default function Home() {
       <SidebarInset>
         <div className="p-4">
             <div className="flex justify-between items-center mb-4">
-                <SidebarTrigger asChild>
-                    <Button variant="outline" className="md:hidden">
-                        Filtros y Categorías
-                    </Button>
+                <SidebarTrigger variant="outline" className="md:hidden">
+                    Filtros y Categorías
                 </SidebarTrigger>
                  {(filters.category || (filters.brands && filters.brands.length > 0) || (filters.colors && filters.colors.length > 0) || filters.priceRange) && (
                     <Button variant="ghost" onClick={handleClearFilters}>

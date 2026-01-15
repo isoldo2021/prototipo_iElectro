@@ -13,6 +13,9 @@ import { Slider } from "@/components/ui/slider"
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "./ui/scroll-area"
 import type { Filters } from "@/app/page";
+import Link from "next/link"
+import { Package, Truck, ScanSearch, PackageSearch, Users, ShoppingBasket, MapPin, FileText } from "lucide-react"
+import { Separator } from "./ui/separator"
 
 const categories = [
     "Audio",
@@ -140,6 +143,57 @@ export function ProductFilters({ onApplyFilters, onCategorySelect }: ProductFilt
             </ScrollArea>
             <div className="mt-6 pt-4 border-t">
                 <Button className="w-full" onClick={handleApply}>APLICAR</Button>
+            </div>
+             <div className="p-4 border-t mt-auto space-y-2">
+                <Separator className="mb-4" />
+                <Button variant="ghost" asChild className="p-0 h-auto justify-start text-base w-full">
+                    <Link href="/products-admin" className="flex items-center gap-2">
+                        <ShoppingBasket className="h-5 w-5" />
+                        <span>Artículos</span>
+                    </Link>
+                </Button>
+                <Button variant="ghost" asChild className="p-0 h-auto justify-start text-base w-full">
+                    <Link href="/clients" className="flex items-center gap-2">
+                        <Users className="h-5 w-5" />
+                        <span>Clientes</span>
+                    </Link>
+                </Button>
+                <Button variant="ghost" asChild className="p-0 h-auto justify-start text-base w-full">
+                    <Link href="/address-check" className="flex items-center gap-2">
+                        <MapPin className="h-5 w-5" />
+                        <span>Consulta de Domicilio</span>
+                    </Link>
+                </Button>
+                 <Button variant="ghost" asChild className="p-0 h-auto justify-start text-base w-full">
+                    <Link href="/orders" className="flex items-center gap-2">
+                        <Package className="h-5 w-5" />
+                        <span>Consulta de Pedidos</span>
+                    </Link>
+                </Button>
+                <Button variant="ghost" asChild className="p-0 h-auto justify-start text-base w-full">
+                    <Link href="/stock-availability" className="flex items-center gap-2">
+                        <PackageSearch className="h-5 w-5" />
+                        <span>Consulta de Stock</span>
+                    </Link>
+                </Button>
+                <Button variant="ghost" asChild className="p-0 h-auto justify-start text-base w-full">
+                    <Link href="/delivery-availability" className="flex items-center gap-2">
+                        <Truck className="h-5 w-5" />
+                        <span>Disponibilidad de entrega</span>
+                    </Link>
+                </Button>
+                <Button variant="ghost" asChild className="p-0 h-auto justify-start text-base w-full">
+                    <Link href="/scan-price" className="flex items-center gap-2">
+                        <ScanSearch className="h-5 w-5" />
+                        <span>Escaneá un precio</span>
+                    </Link>
+                </Button>
+                <Button variant="ghost" asChild className="p-0 h-auto justify-start text-base w-full">
+                    <Link href="/sales-report" className="flex items-center gap-2">
+                        <FileText className="h-5 w-5" />
+                        <span>Reporte de Ventas</span>
+                    </Link>
+                </Button>
             </div>
         </div>
     )

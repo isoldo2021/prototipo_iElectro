@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from "react";
@@ -38,6 +39,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "./ui/label";
 
 const formSchema = z.object({
   ean: z.string().optional(),
@@ -187,11 +189,11 @@ export function SalesReportView() {
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
                     <div className="flex items-center gap-2">
-                        <FormLabel>Selección:</FormLabel>
+                        <Label>Selección:</Label>
                         <Checkbox />
                     </div>
                      <div className="flex items-center gap-2">
-                        <FormLabel>Registros por página:</FormLabel>
+                        <Label>Registros por página:</Label>
                         <Select defaultValue="15">
                             <SelectTrigger className="w-[70px]">
                                 <SelectValue />
@@ -242,7 +244,7 @@ export function SalesReportView() {
                 </Table>
             </div>
              <div className="flex items-center gap-2">
-                <FormLabel>Exportación de datos:</FormLabel>
+                <Label>Exportación de datos:</Label>
                 <Button variant="ghost" size="icon">
                     <Download className="h-6 w-6 text-blue-800" />
                 </Button>
@@ -256,3 +258,5 @@ export function SalesReportView() {
     </div>
   );
 }
+
+    

@@ -12,6 +12,7 @@ import { Label } from "@/components/ui/label"
 import { Slider } from "@/components/ui/slider"
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "./ui/scroll-area"
+import type { Filters } from "@/app/page";
 
 const categories = [
     "Audio",
@@ -29,15 +30,35 @@ const categories = [
 ].sort((a, b) => a.localeCompare(b));
 
 const subCategoryOptions = ["Heladeras", "Freezers", "Cavas"];
-const brandOptions = ["Samsung", "LG", "Whirlpool", "Gafa", "Patrick"];
-const colorOptions = ["Inox", "Blanco", "Negro", "Gris"];
+const brandOptions = ["Samsung", "LG", "Whirlpool", "Gafa", "Patrick", "Drean", "BGH", "Lenovo", "Nespresso", "Philips", "Rheem", "Nakan"];
+const colorOptions = ["Inox", "Blanco", "Negro", "Gris", "Plata"];
 
+interface ProductFiltersProps {
+    onApplyFilters: (filters: Filters) => void;
+    onCategorySelect: (category: string) => void;
+}
 
-export function ProductFilters() {
-    const [priceRange, setPriceRange] = useState([1000, 12000000]);
+export function ProductFilters({ onApplyFilters, onCategorySelect }: ProductFiltersProps) {
+    const [priceRange, setPriceRange] = useState([1000, 1200000]);
+    const [selectedSubCategories, setSelectedSubCategories] = useState<string[]>([]);
+    const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
+    const [selectedColors, setSelectedColors] = useState<string[]>([]);
+
+    const handleCheckboxChange = (setter: React.Dispatch<React.SetStateAction<string[]>>, option: string) => {
+        setter(prev => prev.includes(option) ? prev.filter(item => item !== option) : [...prev, option]);
+    };
+    
+    const handleApply = () => {
+        onApplyFilters({
+            subCategory: selectedSubCategories,
+            brands: selectedBrands,
+            colors: selectedColors,
+            priceRange: priceRange,
+        });
+    }
 
     return (
-        <div className="p-4 flex flex-col h-full">
+        <div className="p-4 flex flex-col h-full border rounded-lg">
             <h2 className="text-2xl font-bold font-headline mb-4">Catálogo</h2>
             
             <ScrollArea className="flex-grow pr-4 -mr-4">
@@ -49,7 +70,7 @@ export function ProductFilters() {
                                <div className="space-y-2 pt-2">
                                     {categories.map(category => (
                                          <div key={category} className="flex items-center space-x-2">
-                                            <a href="#" className="text-sm hover:underline">{category}</a>
+                                            <button onClick={() => onCategorySelect(category)} className="text-sm hover:underline">{category}</button>
                                         </div>
                                     ))}
                                 </div>
@@ -66,7 +87,7 @@ export function ProductFilters() {
                                 <div className="space-y-2 pt-2">
                                     {subCategoryOptions.map(option => (
                                          <div key={option} className="flex items-center space-x-2">
-                                            <Checkbox id={`subcat-${option}`} />
+                                            <Checkbox id={`subcat-${option}`} onCheckedChange={() => handleCheckboxChange(setSelectedSubCategories, option)} checked={selectedSubCategories.includes(option)} />
                                             <Label htmlFor={`subcat-${option}`} className="font-normal">{option}</Label>
                                         </div>
                                     ))}
@@ -77,9 +98,9 @@ export function ProductFilters() {
                             <AccordionTrigger className="font-semibold">Marca</AccordionTrigger>
                             <AccordionContent>
                                 <div className="space-y-2 pt-2">
-                                    {brandOptions.map(option => (
+                                    {brandOptions.sort().map(option => (
                                          <div key={option} className="flex items-center space-x-2">
-                                            <Checkbox id={`brand-${option}`} />
+                                            <Checkbox id={`brand-${option}`} onCheckedChange={() => handleCheckboxChange(setSelectedBrands, option)} checked={selectedBrands.includes(option)}/>
                                             <Label htmlFor={`brand-${option}`} className="font-normal">{option}</Label>
                                         </div>
                                     ))}
@@ -92,7 +113,7 @@ export function ProductFilters() {
                                 <div className="space-y-2 pt-2">
                                     {colorOptions.map(option => (
                                          <div key={option} className="flex items-center space-x-2">
-                                            <Checkbox id={`color-${option}`} />
+                                            <Checkbox id={`color-${option}`} onCheckedChange={() => handleCheckboxChange(setSelectedColors, option)} checked={selectedColors.includes(option)}/>
                                             <Label htmlFor={`color-${option}`} className="font-normal">{option}</Label>
                                         </div>
                                     ))}
@@ -105,7 +126,7 @@ export function ProductFilters() {
                         <h3 className="font-semibold mb-2 mt-4 text-base">Gama De Precios</h3>
                         <Slider
                             defaultValue={[priceRange[0], priceRange[1]]}
-                            max={12000000}
+                            max={1200000}
                             min={1000}
                             step={1000}
                             onValueChange={(value) => setPriceRange(value)}
@@ -117,8 +138,8 @@ export function ProductFilters() {
                     </div>
                 </div>
             </ScrollArea>
-            <div className="mt-6">
-                <Button className="w-full">APLICAR</Button>
+            <div className="mt-6 pt-4 border-t">
+                <Button className="w-full" onClick={handleApply}>APLICAR</Button>
             </div>
         </div>
     )

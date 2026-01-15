@@ -24,6 +24,7 @@ export type Product = {
   imageUrls: string[];
   imageHint: string;
   category: 'small' | 'large';
+  categoryName?: string;
   specifications: {
     [key: string]: string;
   };

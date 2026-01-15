@@ -65,8 +65,7 @@ export function ProductCatalog({ allProducts }: ProductCatalogProps) {
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-8">
-        <h2 className="text-3xl font-bold font-headline">Nuestro Catálogo</h2>
+      <div className="flex justify-end items-center mb-8">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline">

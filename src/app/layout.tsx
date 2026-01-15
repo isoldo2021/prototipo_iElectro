@@ -32,20 +32,11 @@ export default function RootLayout({
       <body className={cn('min-h-screen bg-background font-body antialiased')}>
         <FirebaseClientProvider>
           <Providers>
-            <SidebarProvider>
-              <Sidebar>
-                  <SidebarContent>
-                      <CategoryMenu />
-                  </SidebarContent>
-              </Sidebar>
-              <SidebarInset>
-                  <div className="relative flex min-h-dvh flex-col bg-background">
-                      <SiteHeader />
-                      <main className="flex-1">{children}</main>
-                      <SiteFooter />
-                  </div>
-              </SidebarInset>
-            </SidebarProvider>
+            <div className="relative flex min-h-dvh flex-col bg-background">
+                <SiteHeader />
+                <main className="flex-1">{children}</main>
+                <SiteFooter />
+            </div>
             <Toaster />
           </Providers>
         </FirebaseClientProvider>

@@ -19,7 +19,11 @@ export const products: Product[] = [
     ],
     "imageHint": "heladera moderna",
     "category": "large",
+    "categoryName": "Heladeras y freezers",
     "specifications": {
+      "Sub-Categoría": "Heladeras",
+      "Marca": "Samsung",
+      "Color": "Plata",
       "Capacidad total": "382 L",
       "Tipo de deshielo": "No Frost",
       "Eficiencia energética": "A+",
@@ -49,7 +53,10 @@ export const products: Product[] = [
     ],
     "imageHint": "lavarropas blanco",
     "category": "large",
+    "categoryName": "Lavado",
     "specifications": {
+      "Marca": "Drean",
+      "Color": "Blanco",
       "Capacidad de lavado": "8 kg",
       "Velocidad de centrifugado": "1400 rpm",
       "Eficiencia energética": "A++",
@@ -77,7 +84,10 @@ export const products: Product[] = [
     ],
     "imageHint": "smart tv",
     "category": "large",
+    "categoryName": "TV y soportes",
     "specifications": {
+      "Marca": "LG",
+      "Color": "Negro",
       "Tamaño de pantalla": "55 pulgadas",
       "Resolución": "4K UHD (3840 x 2160)",
       "Sistema operativo": "webOS 22",
@@ -104,7 +114,9 @@ export const products: Product[] = [
     ],
     "imageHint": "smartphone",
     "category": "small",
+    "categoryName": "Celulares",
     "specifications": {
+      "Marca": "Samsung",
       "Pantalla": "6.4 pulgadas Super AMOLED",
       "Almacenamiento": "128 GB",
       "Cámara principal": "50 MP",
@@ -128,7 +140,10 @@ export const products: Product[] = [
     ],
     "imageHint": "cocina gas",
     "category": "large",
+    "categoryName": "Cocinas y hornos",
     "specifications": {
+      "Marca": "Escorial",
+      "Color": "Blanco",
       "Tipo": "A gas",
       "Cantidad de hornallas": "4",
       "Ancho": "50 cm",
@@ -154,7 +169,9 @@ export const products: Product[] = [
     ],
     "imageHint": "aire acondicionado",
     "category": "large",
+    "categoryName": "Climatización",
     "specifications": {
+      "Marca": "BGH",
       "Frigorías": "3000",
       "Tecnología": "Inverter",
       "Tipo de climatización": "Frío/Calor",
@@ -181,7 +198,10 @@ export const products: Product[] = [
     "imageUrls": ["https://images.unsplash.com/photo-1673102392433-a3d4f93a958c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxzb255JTIwd2gxMDAweG01fGVufDB8fHx8MTc2ODgyNzExN3ww&ixlib=rb-4.1.0&q=80&w=1080"],
     "imageHint": "auriculares inalámbricos",
     "category": "small",
+    "categoryName": "Audio",
     "specifications": {
+      "Marca": "Sony",
+      "Color": "Negro",
       "Tipo": "Over-ear",
       "Conectividad": "Bluetooth 5.2",
       "Cancelación de ruido": "Sí, activa",
@@ -202,7 +222,10 @@ export const products: Product[] = [
     "imageUrls": ["https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxsZW5vdm8lMjBsYXB0b3B8ZW58MHx8fHwxNzY4ODI3MTUwfDA&ixlib=rb-4.1.0&q=80&w=1080"],
     "imageHint": "notebook lenovo",
     "category": "small",
+    "categoryName": "Informática y gaming",
     "specifications": {
+      "Marca": "Lenovo",
+      "Color": "Gris",
       "Procesador": "AMD Ryzen 5",
       "Memoria RAM": "8 GB",
       "Almacenamiento": "256 GB SSD",
@@ -223,8 +246,10 @@ export const products: Product[] = [
     "imageUrls": ["https://images.unsplash.com/photo-1515442261605-65987783cb6a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Y29mZmVlJTIwbWFrZXJ8ZW58MHx8fHwxNzY3ODcxNzIxfDA&ixlib=rb-4.1.0&q=80&w=1080"],
     "imageHint": "cafetera pequeña",
     "category": "small",
+    "categoryName": "Pequeños electrodomésticos",
     "specifications": {
       "Marca": "Nespresso",
+      "Color": "Negro",
       "Presión": "19 bares",
       "Capacidad del tanque": "0.6 L",
       "Apagado automático": "Sí"
@@ -243,6 +268,7 @@ export const products: Product[] = [
     "imageUrls": ["https://images.unsplash.com/photo-1621202271884-6c35234313f2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxlbGVjdHJpYyUyMHNoYXZlcnxlbnwwfHx8fDE3NjgyNzE5OTV8MA&ixlib=rb-4.1.0&q=80&w=1080"],
     "imageHint": "afeitadora eléctrica",
     "category": "small",
+    "categoryName": "Cuidado personal y salud",
     "specifications": {
       "Marca": "Philips",
       "Sistema de afeitado": "Cuchillas ComfortCut",
@@ -263,7 +289,9 @@ export const products: Product[] = [
     "imageUrls": ["https://images.unsplash.com/photo-1583853314942-1291b5a265c7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxiwoB0ZXIlMjBoZWF0ZXJ8ZW58MHx8fHwxNzY4ODI3MTgxfDA&ixlib=rb-4.1.0&q=80&w=1080"],
     "imageHint": "termotanque gas",
     "category": "large",
+    "categoryName": "Termotanques y calefones",
     "specifications": {
+      "Marca": "Rheem",
       "Capacidad": "80 L",
       "Tipo de conexión": "Superior",
       "Recuperación": "Alta",
@@ -284,6 +312,7 @@ export const products: Product[] = [
     "imageUrls": ["https://images.unsplash.com/photo-1617294862839-a90d04c40049?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHx0diUyMG1vdW50fGVufDB8fHx8MTc2ODgyNzIxMnww&ixlib=rb-4.1.0&q=80&w=1080"],
     "imageHint": "soporte tv",
     "category": "small",
+    "categoryName": "Instalaciones",
     "specifications": {
       "Marca": "Nakan",
       "Compatibilidad": "32 a 65 pulgadas",

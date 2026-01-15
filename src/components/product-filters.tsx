@@ -1,3 +1,5 @@
+
+
 "use client"
 
 import { useState } from "react"
@@ -147,51 +149,67 @@ export function ProductFilters({ onApplyFilters, onCategorySelect }: ProductFilt
              <div className="p-4 border-t mt-auto space-y-2">
                 <Separator className="mb-4" />
                 <Button variant="ghost" asChild className="p-0 h-auto justify-start text-base w-full">
-                    <Link href="/products-admin" className="flex items-center gap-2">
-                        <ShoppingBasket className="h-5 w-5" />
-                        <span>Artículos</span>
+                    <Link href="/products-admin">
+                        <div className="flex items-center gap-2">
+                            <ShoppingBasket className="h-5 w-5" />
+                            <span>Artículos</span>
+                        </div>
                     </Link>
                 </Button>
                 <Button variant="ghost" asChild className="p-0 h-auto justify-start text-base w-full">
-                    <Link href="/clients" className="flex items-center gap-2">
-                        <Users className="h-5 w-5" />
-                        <span>Clientes</span>
+                    <Link href="/clients">
+                         <div className="flex items-center gap-2">
+                            <Users className="h-5 w-5" />
+                            <span>Clientes</span>
+                        </div>
                     </Link>
                 </Button>
                 <Button variant="ghost" asChild className="p-0 h-auto justify-start text-base w-full">
-                    <Link href="/address-check" className="flex items-center gap-2">
-                        <MapPin className="h-5 w-5" />
-                        <span>Consulta de Domicilio</span>
+                    <Link href="/address-check">
+                         <div className="flex items-center gap-2">
+                            <MapPin className="h-5 w-5" />
+                            <span>Consulta de Domicilio</span>
+                        </div>
                     </Link>
                 </Button>
                  <Button variant="ghost" asChild className="p-0 h-auto justify-start text-base w-full">
-                    <Link href="/orders" className="flex items-center gap-2">
-                        <Package className="h-5 w-5" />
-                        <span>Consulta de Pedidos</span>
+                    <Link href="/orders">
+                         <div className="flex items-center gap-2">
+                            <Package className="h-5 w-5" />
+                            <span>Consulta de Pedidos</span>
+                        </div>
                     </Link>
                 </Button>
                 <Button variant="ghost" asChild className="p-0 h-auto justify-start text-base w-full">
-                    <Link href="/stock-availability" className="flex items-center gap-2">
-                        <PackageSearch className="h-5 w-5" />
-                        <span>Consulta de Stock</span>
+                    <Link href="/stock-availability">
+                         <div className="flex items-center gap-2">
+                            <PackageSearch className="h-5 w-5" />
+                            <span>Consulta de Stock</span>
+                        </div>
                     </Link>
                 </Button>
                 <Button variant="ghost" asChild className="p-0 h-auto justify-start text-base w-full">
-                    <Link href="/delivery-availability" className="flex items-center gap-2">
-                        <Truck className="h-5 w-5" />
-                        <span>Disponibilidad de entrega</span>
+                    <Link href="/delivery-availability">
+                         <div className="flex items-center gap-2">
+                            <Truck className="h-5 w-5" />
+                            <span>Disponibilidad de entrega</span>
+                        </div>
                     </Link>
                 </Button>
                 <Button variant="ghost" asChild className="p-0 h-auto justify-start text-base w-full">
-                    <Link href="/scan-price" className="flex items-center gap-2">
-                        <ScanSearch className="h-5 w-5" />
-                        <span>Escaneá un precio</span>
+                    <Link href="/scan-price">
+                         <div className="flex items-center gap-2">
+                            <ScanSearch className="h-5 w-5" />
+                            <span>Escaneá un precio</span>
+                        </div>
                     </Link>
                 </Button>
                 <Button variant="ghost" asChild className="p-0 h-auto justify-start text-base w-full">
-                    <Link href="/sales-report" className="flex items-center gap-2">
-                        <FileText className="h-5 w-5" />
-                        <span>Reporte de Ventas</span>
+                    <Link href="/sales-report">
+                         <div className="flex items-center gap-2">
+                            <FileText className="h-5 w-5" />
+                            <span>Reporte de Ventas</span>
+                        </div>
                     </Link>
                 </Button>
             </div>

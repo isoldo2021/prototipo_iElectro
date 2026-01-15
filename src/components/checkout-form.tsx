@@ -97,6 +97,10 @@ export function CheckoutForm() {
       city: "",
       postalCode: "",
       dni: "",
+      store: "",
+      cardNumber: "",
+      expiryDate: "",
+      cvc: "",
     },
   });
   
